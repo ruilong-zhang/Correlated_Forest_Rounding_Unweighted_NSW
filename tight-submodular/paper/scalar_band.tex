@@ -1,0 +1,271 @@
+\section{One analytic band for all positive counts}\label{simp:scalar-band}
+
+Keep the scalar state and localized transfer of
+Sections~\ref{simp:scalar-state} and \ref{simp:controller-section}.
+Set
+\[
+ t_-=1199/10000,\quad t_+=3001/10000,\quad d_*=23/20,
+ \quad U_0=.6905799,\quad\lambda_0=.2319048039,\quad\xi=10^{-6}.
+\]
+The two ordinary constraints used here are
+\[
+ y_j+\tfrac25(t-S_j)\le R_4e^{\pi_j},\qquad
+ y_j+\tfrac12(t-S_j)\le R_5e^{\pi_j}\quad(D\le4y_j),
+ \qquad R_5=1.02631852.
+\]
+Write $\widehat P_j=P_j-\frac12\min(\pi_j,K)$ and
+$F(H)=\mathcal E(H)+b+\Psi(H)$.
+The target $b$ is the actual row target; the proof allows every
+$b\in[0,b_c]$ and does not require equality at a clipped multiplier.
+
+\begin{theorem}\label{simp:band}
+If $t_-\le t\le t_+$ and $0\le D\le d_*$, then, for every
+head set with $1\le h=|H|\le4$ and arbitrary nonnegative prices,
+\begin{equation}\label{simp:band-result}
+ F(H)<U_0+(h-1)\lambda_0-\xi.
+\end{equation}
+The proof includes its own one-head base and all unbounded heads.
+Thus the same whole-box rule is independently valid for all four
+numerical verifiers.
+\end{theorem}
+
+\subsection{A constant credit and one owner inequality}
+
+Put $d=\max(1,D)$. Since $0\le v(r)\le r$, for $D\le1$
+and $T\le t$ one has
+\[
+ D[1+v((T/D-\beta)^+)]\le\max(D,T+zD)\le1;
+\]
+here $t_++z<1$. For $D\ge1$, $t_+<\beta$ gives $W(T,D)=D$.
+Consequently the credit of the controller is constant in $\mu$:
+\begin{equation}\label{simp:band-credit}
+ W(t-Q,D)=d,\qquad
+ C(t,D,0;\mu)=c(D):=\min\{(3/5)\log d,h_0(\log d)\}.
+\end{equation}
+Indeed the minimizing $Q$ is zero and
+$\log M(D)\ge\log(481/400)>(3/5)\log d_*$ when $D\ge1$.
+The HOME constraints also give $\phi_H\ge c(D)\ge0$.
+The function $c(D)+1+\log r-rt$ increases strictly on $(0,1]$,
+starts at $-\infty$, and ends above $b_c$.
+Moreover
+\[
+ k<21/50,\qquad
+ 1+\log(21/50)-(21/50)t_+>b_c.
+\]
+Therefore the actual clipped controller satisfies
+\begin{equation}\label{simp:band-mu}
+ k/d\le\mu\le21/50,
+ \qquad c(D)-\mu t+1+\log\mu\ge b.
+\end{equation}
+
+For a head write $w=e^\pi$. In addition to $\widehat P\ge0$,
+the price envelope gives
+\begin{align}
+ \widehat P&\ge\tfrac{11}{40}(w-1)quad(1\le w\le2),
+                                                   \label{simp:band-price-chord}\\
+ \widehat P&\ge\log w+\log y-\log(y+5Dw/16)-K/2,
+                                                   \label{simp:band-parallel-price}\\
+ e^{-\widehat P}&\le e^{K/2}(w^{-1}+5D/(16y))\quad(y>0).
+                                                   \label{simp:band-tail-price}
+\end{align}
+For completeness, \eqref{simp:band-price-chord} follows from
+$\widehat P\ge\max\{g(\pi),(2/5)\pi\}-\frac12\min(\pi,K)$.
+On $[0,K]$, use $g(\pi)\ge\pi-5\pi^2$ and
+$e^\pi\le1+\pi+(3/5)\pi^2$; the remaining coefficient is
+\[
+ \tfrac12-\tfrac{11}{40}-(5+\tfrac35\tfrac{11}{40})a_0>0.
+\]
+On $[K,a_0]$ the difference has positive derivative, since
+$e^{-10a_0}>(11/40)e^{a_0}$.
+On $[a_0,1/400]$ use $b_0-K/2>(11/40)(e^{1/400}-1)$.
+On $[1/400,\log2]$ the difference
+$(2/5)\pi-K/2-(11/40)(e^\pi-1)$ is concave with positive endpoints.
+The last two price bounds follow from reservation and
+$M(w\min(1,D/y))\le1+5Dw/(16y)$.
+
+Define
+\[
+ q_0(t)=\min\{R_4-(2/5)t,R_5-t/2\},\quad
+ q_-=R_5-t_+/2,\quad q_+=R_4-(2/5)t_-.
+\]
+For every head with $y\le6$ we claim
+\begin{equation}\label{simp:band-owner}
+ \mu\beta y-\mu zS-\widehat P\le\mu\beta q_0(t).
+\end{equation}
+Let $\Delta=y-S/2-q_0(t)$. If $\Delta\le0$, use
+$z>\beta/2$ and $\widehat P\ge0$.
+Otherwise $y>q_->4/5$, so both ordinary constraints are available.
+They imply
+$y-S/2\le q_0(t)+R_5(w-1)$, hence $w\ge1+\Delta/R_5$.
+For $0<\Delta\le R_5$, \eqref{simp:band-price-chord} gives
+$\widehat P\ge\mu\beta\Delta$, since
+$(21/50)\beta R_5<11/40$.
+When $\pi\ge\log2$, use instead
+$(2/5)\log2-K/2>11/40$ to obtain the same bound.
+
+For $R_5\le\Delta\le6-q_-$, let $c_M=23/64$ and
+\[
+ L_*(\Delta)=\log(1+\Delta/R_5)+\log(q_-+\Delta)
+ -\log\{q_-+\Delta+c_M(1+\Delta/R_5)\}.
+\]
+The function $\log w+\log y-\log(y+c_Mw)$ increases in both
+variables and is jointly concave. In relative differential coordinates
+$A=dw/w,B=dy/y$, its Hessian form is
+\[
+ -A^2-B^2+(\lambda A+(1-\lambda)B)^2\le0,
+ \qquad \lambda=c_Mw/(y+c_Mw)\in(0,1).
+\]
+Thus \eqref{simp:band-parallel-price} bounds $\widehat P$ below by
+$L_*(\Delta)-K/2$. The concave function
+$L_*(\Delta)-K/2-(21/50)\beta\Delta$ has margins greater than
+$0.1000$ and $0.1233$ at the two endpoints.
+It is positive throughout; $z>\beta/2$ now proves
+\eqref{simp:band-owner} in every case.
+
+\subsection{Two simultaneous scalar bounds}
+
+Suppose first that all heads have $y_j\le6$.
+The shared-overlap tangent uses
+\[
+ -\mu\beta(\sum_jS_j-\gamma)^+-\mu z\gamma
+ \le-\mu z\sum_jS_j,
+\]
+which follows from $\beta>z$ by considering either sign of the
+positive-part argument. Summing \eqref{simp:band-owner} gives two
+bounds at the same actual multiplier:
+\begin{align}
+ F(H)&\le A_h(\mu;t):=-\log\beta+h\mu\beta q_0(t),
+                                                      \label{simp:band-A}\\
+ F(H)&\le B_h(\mu;t,c):=-\log(\mu\beta)-1+\mu t-c+b_c
+                         +h\mu\beta q_0(t)quad(\phi_H\ge c\ge0).
+                                                      \label{simp:band-B}
+\end{align}
+For the first bound use $\phi_H+\mu q\ge c(D)$ and
+\eqref{simp:band-mu}; the actual $b$ cancels exactly.
+For the second discard $q\ge0$ and use $b\le b_c$.
+
+For $h\le3$, $B_h$ decreases throughout $0<\mu\le21/50$:
+\[
+ \partial_\mu B_h\le-50/21+t_++3\beta q_+<-0.2748.
+\]
+Let $r_c(t)$ solve $c+1+\log r_c-r_ct=b_c$ below $21/50$.
+The two bounds agree at this root, while $A_h$ increases. Hence
+\begin{equation}\label{simp:band-benchmark}
+ \min(A_h,B_h)\le-\log\beta+h\beta r_c(t)q_0(t).
+\end{equation}
+This argument includes every clipped-floor state.
+Set $t_c=10(R_5-R_4)=.2599495$.
+On a segment $q_0=R-st$,
+\[
+ \frac{d}{dt}\{r_c(t)(R-st)\}
+ =\frac{r_c(t)(r_c(t)R-s)}{1-r_c(t)t}.
+\]
+The root increases with $t$, so the first score segment has no
+interior maximum; the second decreases because $(21/50)R_5<1/2$.
+
+Three regions cover all bounded-head states for $h=1,2,3$.
+For $t\ge3/20$, take $c=0$ and test $t=3/20,t_c$ in
+\eqref{simp:band-benchmark}.
+For $D\ge1003/1000$, take $c_*=(3/5)\log(1003/1000)$ and
+test $t=t_-,t_c$. Every HOME branch exceeds $c_*$:
+the localized branch uses $(2/5)\log(1003/1000)>b_0$, and
+the others use monotonicity and $M(1)=481/400$.
+The root upper bounds needed for these tests are
+\[
+ r_0(3/20)<.390121814249,\quad r_0(t_c)<.409249486646,
+ \quad r_{c_*}(t_-)<.384621435921,
+ \quad r_{c_*}(t_c)\le r_0(t_c).
+\]
+Each displayed rational endpoint has strictly positive defining
+root residual, so monotonicity proves its direction.
+Finally, on $t\le3/20,D\le1003/1000$,
+$\mu\in[k/(1003/1000),k]$, since
+$1+\log k-k(3/20)>b_c$.
+Use \eqref{simp:band-B} with $c=0$, $\mu=k/(1003/1000)$,
+and $t=3/20$. The last substitution increases the bound because
+$1-(2h/5)\beta>0$ for $h\le3$.
+For each of these finitely many endpoints the margin below
+$U_0+(h-1)\lambda_0$ exceeds $1.7\cdot10^{-5}>\xi$.
+
+\subsection{Four heads and the exact transition}
+
+Put
+\[
+ t_f=(1+\log k-b_c)/k,
+ \qquad .18<t_f<.183<t_c.
+\]
+If $t\le t_f$, then $\mu\in[k/d,k]$.
+Every HOME branch dominates $G_D=\log d-1+1/d$ on $D\le d_*$.
+For the linear branch the difference has derivative
+$(1-(2/5)D)/D^2\ge0$; for the multiplicative branch use
+$\log(481/400)>G_{d_*}$.
+For the localized branch, put $s=\log D\ge0$.
+If $s\le a_0$,
+\[
+ h_0(s)\ge(5-(50/3)a_0)s^2\ge s^2/2\ge s-1+e^{-s}.
+\]
+If $s\ge a_0$, use $1-e^{-a_0}>b_0$.
+The $D\le1$ case is nonnegativity.
+
+The right side of \eqref{simp:band-B}, with $h=4,c=G_D$, is
+convex in $\mu$. Since $q_0=R_4-(2/5)t$, its two endpoints
+$k/d,k$ yield
+\begin{equation}\label{simp:band-four-floor}
+ F(H)\le\log4-
+ \frac{(2/5-k)t-(R_4-1)}d+b_c.
+\end{equation}
+At $k/d$, the HOME term cancels $\log d-1+1/d$ exactly;
+at $k$, use $G_D\ge0$ and the positive numerator.
+The largest bound is at $t=t_-,d=d_*$.
+Its margin below $\log4$ exceeds $2.9323763\cdot10^{-6}$,
+and below $U_0+3\lambda_0$ exceeds $2.88295\cdot10^{-6}>\xi$.
+
+If $t\ge t_f$, then $r_0(t)\ge k$ and $c(D)\ge0$ imply
+$\mu\le r_0(t)$ for every actual target $b\le b_c$.
+Use \eqref{simp:band-A}; the preceding derivative calculation reduces
+the maximum to $t_f$ or $t_c$. At $t_f$ the root equals $k$,
+and at $t_c$ use its displayed rational upper bound.
+Both endpoint margins exceed $1/50000$.
+This proves the theorem for all bounded-head states.
+
+\subsection{A direct one-head base closes every tail}
+
+For one head with $y\ge6$, keep the $a$-penalty and discard
+only nonnegative penalties on $\gamma,q,\phi_H$.
+Since $V_+\le a+y$ and
+$\mu\beta\ge1/(4d_*)>1/6\ge1/y$,
+the maximum of $\log(a+y)-\mu\beta a$ occurs at $a=0$.
+Using \eqref{simp:band-tail-price} and $w\ge y$ gives
+\[
+ F(\{j\})\le\log y-\widehat P+\mu t+b
+ \le\log(1+5d_*/16)+K/2+(21/50)t_++b_c
+ <.434<U_0-\xi.
+\]
+Thus the one-head result covers every possible head size.
+
+For a set with $h\ge2$, nonnegative submodularity gives
+$\sum_jV_+(H\setminus\{j\})\ge(h-1)V_+(H)$.
+If some inverse charged price obeys
+$e^{-\widehat P_j}\le(h-1)(e^\delta-1)$, all others are at
+most one, so their sum is at most $(h-1)e^\delta$.
+Exponentiating and summing the proposed deletion bounds then shows
+that some deletion increases the scalar by at most $\delta$.
+This is an elementary value-and-price statement, independent of any
+positive-count theorem outside this section.
+
+For every head with $y\ge6$, \eqref{simp:band-tail-price} gives
+\[
+ e^{-\widehat P}\le\frac{29}{128}e^{K/2}
+                  <e^{\lambda_0-\xi}-1.
+\]
+Apply the deletion with $\delta=\lambda_0-\xi$ and retain the same
+$a,\gamma,q,t,D,\mu,b,\phi_H$ and remaining prices.
+Starting from the just-proved one-head result gives the two-head,
+then the three-head, then the four-head result, with at least the
+claimed reserve at every step. If no large head exists, the direct
+bounded-head proof applies. This completes Theorem~\ref{simp:band}.
+
+All signs above are checked by a single directed endpoint program,
+including the three root brackets and each count's endpoint bound.
+A numerical box wholly contained in this rectangle may therefore
+be accepted with reserve $10^{-6}$ for any $h=1,2,3,4$.

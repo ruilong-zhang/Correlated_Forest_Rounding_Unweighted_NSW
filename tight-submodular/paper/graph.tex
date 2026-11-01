@@ -1,0 +1,467 @@
+\section{One sampled matching and one minimum-cost flow}
+\label{simp:graph}
+
+This section isolates the entire combinatorial step in one parameterized
+rounding theorem.  It uses one auxiliary primal--dual pair.  No comparator
+allocation is an algorithmic input, and no list of repaired scores is
+computed.  The only local valuation facts used below are the score and
+minorant certificates of Sections~\ref{simp:score-primitives} and
+\ref{simp:minorants}, and the pointwise inequality of
+Section~\ref{simp:completion-section}.
+
+\subsection{The precise local interface}
+
+Fix a feasible fractional allocation $x$ of the residual items.
+Write $Q(S)$ for the maximum utility product obtained by giving each row
+one reserved item after disjoint residual bundles $S_i$ have been chosen.
+An ordinary label $e=(i,j)$ has a logarithmic score $\ell_e$ and an
+outcome payoff $q_e(S_i)$; row $i$ also has a private score $\ell_{i0}$.
+A new label has score $n_{ij}$ and payoff $q^{\mathrm N}_{ij}(S_i)$.
+All scores in this section are logarithmic.
+
+We use the following two explicit forms of local certificate.
+
+\begin{enumerate}
+\item A \emph{single-program certificate} supplies a normalized monotone
+submodular function $g$ and its independent mean $G(x_i)$.  For every
+fractional row with at most one fractional coordinate and $G(y)\ge G(x_i)$,
+the resulting two-outcome law satisfies $\mathbb E q(S_i)\ge\ell$.
+Constants are permitted.  Ordinary and private labels have this form.
+The underlying raw valuation changes by at most $\alpha_i$ in this law.
+\item An \emph{additive minorant certificate} supplies a constant $c_e$
+and a normalized monotone submodular function $g_e$ such that
+\[
+ q_e(S_i)\ge c_e+g_e(S_i),\qquad
+ c_e+G_e(x_i)\ge\ell_e.
+\]
+These certificates can be added with nonnegative weights: the stored
+function is their weighted sum, and no individual mean is preserved.
+Every new candidate and every supported ordinary label on a designated
+compatible row has such a certificate.
+\end{enumerate}
+
+The pointwise completion contract is
+\begin{equation}\label{simp:pointwise-contract}
+ \log Q(S)\ge\sum_i d_iq_{i0}(S_i)
+       +\sum_{e\in\mathrm O}a_eq_e(S_i)
+       +\sum_{e\in\mathrm N}z_eq_e^{\mathrm N}(S_i)
+\end{equation}
+whenever each row has total mass one and the ordinary and new masses
+use column capacity $a_e+2z_e$.  It holds on every common disjoint
+outcome, with no independence assumption between rows.
+
+\begin{lemma}[A common one-function rounding engine]\label{simp:forest}
+Suppose each row has selected one single-program certificate or one
+weighted sum of additive minorants.  There is a feasible joint rounding
+of the residual items whose expected total payoff is at least the sum
+of the selected scores, up to any prescribed positive error.  The same
+engine is used for both types of row.
+\end{lemma}
+\begin{proof}
+Let $d$ be the number of residual items and $N$ the number of initially
+positive row--item coordinates.
+First consider exact multilinear derivatives.  The multilinear
+extension $G_i$ of a selected submodular function has nonnegative first
+derivatives and nonpositive mixed second derivatives.  Consequently
+$G_i$ is convex when two coordinates move in opposite directions.
+
+On a cycle of the row--item support graph, choose opposite changes
+at each item, so that its total load is fixed.  Choose derivative
+ratios to make the directional derivative zero on all but one row;
+reverse the common sign if necessary to make the last derivative
+nonnegative.  Convexity shows that moving to the first boundary
+decreases none of the $G_i$.  At least one support edge disappears.
+Zero derivatives are handled by an arbitrarily small positive
+regularization, or by the finite implementation below.  At most the
+initial number of support edges is removed before the graph is a forest.
+
+For each row, define its own marginal-preserving random program on this
+forest point.  Pair two fractional coordinates $r,s$ and move in
+direction $a_s e_r-a_r e_s$, where $a_r,a_s$ are the two derivatives.
+Choose the two maximal feasible endpoints with their barycentric
+probabilities.  The derivative at the start is zero, so convexity
+preserves $G_i$ at either endpoint.  If both derivatives are zero,
+round one coordinate by its marginal.  Every coordinate is a
+martingale.  After at most $d-1$ pair steps only one fractional item
+remains; round that last coin by its marginal.  Conditional on the
+preceding history, this is a genuine two-outcome law with raw width
+at most $\alpha_i$ and with the required stored mean.  A single-program
+certificate applies to that law.  For a minorant row, preservation
+of the mean of its sum suffices directly.
+
+These row programs are coupled, rather than run independently.
+Let $K(y,y')$ be a transition of a row program, including any estimator
+states.  To condition its final parent-item bit $j$ to be $1$ or $0$,
+use the direct kernels
+\[
+ K_j^+(y,y')=K(y,y')\frac{y'_j}{y_j},\qquad
+ K_j^-(y,y')=K(y,y')\frac{1-y'_j}{1-y_j}.
+\]
+Coordinate martingality makes each requested kernel sum to one;
+zero-probability conditions are never requested.  Root a support tree
+at an item.  That item chooses row $i$ with its forest marginal $y_{ij}$,
+or chooses none.  Each row runs its program conditional on its parent
+item's bit.  At a child item $j$, if its parent row $i$ took it, all
+child rows exclude it.  Otherwise choose child row $k$ with probability
+$y_{kj}/(1-y_{ij})$, or choose none.  The capacity inequality makes
+these probabilities legal.  Inductively, every row sees its prescribed
+parent-bit marginal, so mixing its two conditional programs reconstructs
+its \emph{entire} unconditional row law.  Every item is allocated at
+most once.  Apply the row certificates and then
+\eqref{simp:pointwise-contract} to this common outcome.
+
+Here are the finite details needed by this primitive.  Normalize each
+stored function to range at most one.  With derivative errors at most
+$a$, clip negative estimates to zero and threshold zeros at $a$.
+In a cycle move, all but one empirical directional derivatives vanish;
+the true row mean loses at most $4a$ before the next boundary.
+In a pair move the exact change, for signed step $v$, is
+\[
+ v(a_r\widehat a_s-a_s\widehat a_r)
+   -v^2\widehat a_r\widehat a_s\partial_{rs}G_i.
+\]
+The quadratic term is nonnegative, and the linear error costs at most
+$2a$ at either endpoint.  There are at most $N$ cycle moves and $d-1$
+pair moves per row.  Downward dyadic resets add at most their total
+coordinate change to the mean loss and never violate capacity.
+Thus a score modulus $C$ is accommodated, for example, by
+$a\le\epsilon/[100C(N+d+1)]$ and a total reset loss at most $a$.
+The protected score primitives supply a finite computable modulus $C$.
+
+Each fixed estimator outcome is followed by a barycentric step.
+It therefore remains unweighted in the displayed conditional kernels.
+Estimation failures are charged under the unconditional row programs,
+whose complete laws the coupling preserves; no error is divided by a
+rare conditioning probability.  Hoeffding sampling supplies each
+range-one estimate using $\lceil2a^{-2}\log(2/p)\rceil$ samples.
+All transition probabilities are rational after the indicated
+approximations.  Approximate a categorical kernel by rounding all but
+one of its positive probabilities down to a common dyadic denominator
+and placing the remainder on the retained positive entry.  This creates
+no forbidden transition.  Choosing the sum of the visited transition
+errors below a prescribed $p$ bounds the total variation error by $p$.
+Known reservation and full-set bounds pay the failure and coupling
+errors.  Rational derivative ratios have polynomial bit length: in
+pair rounding, charge additions of bit lengths to the elimination
+tree of the disappearing coordinates; downward resets do the same
+for the forest moves.  This gives polynomial work in the precision
+and input/answer bit lengths, while keeping every history feasible.
+\end{proof}
+
+\subsection{The auxiliary problem and the generic repair contract}
+
+Solve the following single linear program:
+\begin{equation}\label{simp:hybrid-lp}
+ \begin{split}
+ \max\quad&\sum_i d_i\ell_{i0}+\sum_e a_e\ell_e+\sum_e z_en_e,\\
+ &d_i+\sum_{e\ni i}a_e+\sum_{e\ni i}z_e=1,\qquad
+   \sum_{e\ni j}a_e+2\sum_{e\ni j}z_e\le1,
+ \qquad a,z,d\ge0.
+ \end{split}
+\end{equation}
+Fix any complementary optimal primal--dual pair.  Its row values $v_i$
+and nonnegative prices $\pi_j$ satisfy
+\[
+ v_i\ge\ell_{i0},\qquad v_i+\pi_j\ge\ell_{ij},\qquad
+ v_i+2\pi_j\ge n_{ij},\qquad J=\sum_i v_i+\sum_j\pi_j.
+\]
+Write $\sigma_i=v_i-\ell_{i0}\ge0$.  A supported label has positive
+primal mass and hence a tight dual constraint; $d_i\sigma_i=0$.
+
+Fix a row class $A$, with complement $B$, and constants
+\[
+ r\ge2\ \text{integer},\qquad L>0,\quad K>L,\quad T>0,
+ \quad P>0,\quad\frac12\le\theta\le1,\quad\kappa>0.
+\]
+The following is the complete parameter contract:
+\begin{equation}\label{simp:graph-parameters}
+ \boxed{\quad
+ P\ge L+(1-\theta)T,\qquad
+ \frac P{r-1}\le\frac K2,\qquad
+ \frac{\max\{P,\theta T\}}{r-1}
+                 \le\kappa(1-e^{-T}).\quad}
+\end{equation}
+The data must have these three properties.
+
+\begin{enumerate}
+\item Every row with supported new mass lies in $A$, and $d_i=0$ on
+$A$.  Every supported ordinary label on $A$ has an additive minorant.
+The private and ordinary labels on $B$ have single-program certificates.
+\item Every auxiliary new label has a specified ordinary fallback in
+the same auxiliary menu with score at least $n_{ij}-L$.
+It follows immediately that every supported new head has
+\begin{equation}\label{simp:new-price}
+                         0\le\pi_j\le L.
+\end{equation}
+Indeed $v_i+2\pi_j=n_{ij}\le v_i+\pi_j+L$.
+\item On each row of $A$, candidate scores $n_{ij}$ may also be provided
+for labels omitted from the auxiliary LP.  Define
+\[
+ c_{ij}=(v_i+2\pi_j-n_{ij})^+,\qquad
+ b_{ij}=1-e^{-c_{ij}},
+\]
+An unavailable zero-valued candidate has logarithmic score
+$n_{ij}=-\infty$, and we set $c_{ij}=+\infty$, $b_{ij}=1$.
+Every head with $c_{ij}\le T$ must have a new additive-minorant
+certificate and an ordinary fallback of score at least $n_{ij}-L$.
+There is no assumed dual inequality for an omitted candidate.
+\end{enumerate}
+
+\begin{theorem}[One-flow repair]\label{simp:repair-theorem}
+Under this contract, one can sample an ordinary matching, solve one
+integral minimum-cost flow, and apply Lemma~\ref{simp:forest} to obtain
+a feasible output with
+\begin{equation}\label{simp:repair-ledger}
+ \begin{split}
+ \mathbb E\log Q\ge J-\mathcal L-\epsilon,\qquad
+ \mathcal L={}&\frac12\sum_j\min(\pi_j,K)
+   +\frac1{r-1}\sum_{i\in B}\min(\sigma_i,P)\\
+ &+\frac P{r-1}\sum_{i\in A}(r-h_i)^+
+   +\kappa\sum_{i\in A}\sum_{\substack{j\in H_i\\\pi_j\le K}}
+                      \min\{b_{ij},1-e^{-T}\}.
+ \end{split}
+\end{equation}
+Here $H_i$ are \emph{any} pairwise disjoint comparator sets of reserved
+heads, and $h_i=|H_i|$.  They are used only to bound the algorithm.
+The expectation includes the matching sample and the residual rounding.
+There is no requirement to realize an arbitrary mixture of ordinary
+programs: every final $B$ row uses one program, and a two-label $A$ row
+contains at most one ordinary label.
+\end{theorem}
+
+\subsection{A weighted matching lemma with mandatory columns}
+
+We prove the only network inequality needed for the theorem.
+Let $A',B'$ be rows, with an initial zero-cost ordinary matching $M_0$
+covering all of $A'$ and every $B'$ row with $\sigma_i>0$.
+Some columns of $M_0$ are mandatory.  Rows in $A'$ have supply two and
+a capacity-one dummy arc of cost $P$; rows in $B'$ have supply one
+and a private arc of cost $\sigma_i$.  Physical columns have capacity
+one.  Physical costs $w_{ij}$ are nonnegative on $A'$ and zero on $B'$.
+For disjoint sets $H'_i$ of available heads on $A'$, the optimum is at most
+\begin{equation}\label{simp:mandatory-bound}
+ \frac{1}{r-1}\left[
+ \sum_{i\in B'}\min(\sigma_i,P)
+ +P\sum_{i\in A'}(r-|H'_i|)^+
+ +\sum_{i\in A'}\sum_{j\in H'_i}\min(w_{ij},P)\right].
+\end{equation}
+This is a bipartite min-cost flow with integral supplies and bounds,
+so an integral optimum exists and is polynomially computable.
+
+For completeness, its dual, after eliminating the dummy variables, is
+\[
+ D=\sum_{i\in A'}[\lambda_i+\min(\lambda_i,P)]
+       +\sum_{i\in B'}\lambda_i-\sum_j\xi_j,
+\]
+subject to $\lambda_i-\xi_j\le w_{ij}$ on $A'$,
+$\lambda_i\le\xi_j$ on $B'$, and $\lambda_i\le\sigma_i$ on $B'$.
+An optional column has $\xi_j\ge0$; a mandatory column initially
+allows either sign.  Row variables are initially unrestricted.
+
+Replace negative variables by zero.  Feasibility survives because
+all costs are nonnegative.  Every negative column is mandatory and
+has a distinct initial owner with $\lambda_i\le\xi_j<0$.
+The gain from raising this row variable is at least $-\lambda_i$,
+which pays the loss $-\xi_j$ from raising the column variable.
+Thus an optimum may be taken nonnegative.  Now truncate all variables
+at $P$.  Feasibility again survives.  The zero-cost matching covers
+every row that can have positive $\lambda_i$, and implies
+\[
+ \sum_i(\lambda_i-P)^+\le\sum_j(\xi_j-P)^+.
+\]
+The truncation therefore does not decrease the dual objective.
+We may assume $0\le\lambda_i,\xi_j\le P$.
+
+Put $S=\sum_{i\in A'}\lambda_i$.  The initial matching gives $D\le S$.
+Disjointness of the comparator heads, and
+$\xi_j\ge\lambda_i-\min(w_{ij},P)$, give
+\[
+ D\le-(r-2)S+\sum_{i\in B'}\min(\sigma_i,P)
+       +P\sum_{i\in A'}(r-|H'_i|)^+
+       +\sum_{i\in A'}\sum_{j\in H'_i}\min(w_{ij},P).
+\]
+Since $D\le S$ and $r\ge2$, multiplication yields
+$(r-1)D$ at most the bracket in \eqref{simp:mandatory-bound}.
+Duality proves the claim.  The initial owners are essential here:
+arbitrary mandatory columns could not justify the negative-dual step.
+
+\subsection{The algorithm and its proof}
+
+\paragraph{Sample one ordinary matching.}
+Forget the second capacity unit of every new mass.  The masses
+$a_e+z_e$, together with the private masses $d_i$ on distinct private
+dummy columns, form an ordinary fractional matching with every real
+row covered.  Sample an integral matching $M$ with these label marginals.
+This requires no explicit decomposition: pad to a square doubly
+stochastic matrix, and repeatedly choose a fractional support cycle.
+Move to its two maximal alternating endpoints, selecting them with
+barycentric probabilities.  Each edge is a martingale, at least one
+fractional edge disappears, and all row and column sums are preserved.
+Parallel labels are allowed as two-edge cycles, or sampled conditional
+on their combined edge.  There are polynomially many moves.  Discard
+the padding rows afterward.  In particular every $A$ row and every
+$B$ row with $\sigma_i>0$ is physically matched.
+
+Every column with $\pi_j>K$ has no supported new mass by
+\eqref{simp:new-price}.  Complementary slackness makes its ordinary
+load one, so every sampled matching covers it by an ordinary label.
+Lock those sampled edges: their rows use that one tight ordinary
+program.  This can be imposed as fixed arcs of the single network
+below.  For notation, remove their rows and columns, leaving $A',B'$
+and the initial matching $M_0$.
+
+\paragraph{Solve one flow.}
+Make every physical column of $M_0$ mandatory.  Each $A'$ row has
+its one sampled base label at cost zero, all candidates with
+$c_{ij}\le T$ at cost $\theta c_{ij}$, and a capacity-one dummy of
+cost $P$.  It has supply two.  Each $B'$ row has its supported
+ordinary labels at cost zero and a private arc of cost $\sigma_i$;
+it has supply one.  All physical columns have capacity one.
+The initial matching plus one dummy on each $A'$ row is feasible.
+Find an integral minimum-cost flow, of value $C(M)$.
+
+A degree-two $A'$ row uses half of each of its selected labels.
+A degree-one $A'$ row uses its base ordinary program, if selected,
+or the specified ordinary fallback of its selected new label.
+A $B'$ row uses its selected ordinary program or its private program.
+Two half-new labels use one unit of capacity in each column, a
+half-ordinary label uses half a unit, and a single ordinary label
+uses one.  Thus the resulting cost-two labelled flow is feasible.
+Only the sampled base edge can be ordinary on an unlocked $A'$ row,
+so at most one ordinary minorant is ever combined with new minorants.
+Lemma~\ref{simp:forest} and \eqref{simp:pointwise-contract} realize
+this selected flow simultaneously.
+
+\paragraph{Account for its score loss.}
+Relative to row value $v_i$ and full capture of used item prices,
+a half-new candidate loses at most $c_{ij}/2\le\theta c_{ij}$.
+A single new-to-ordinary fallback loses at most
+$L+c_{ij}-\pi_j\le P+\theta c_{ij}$; the last inequality follows
+from $c_{ij}\le T$ and \eqref{simp:graph-parameters}.
+A supported base new label has $c=0$.
+A half-ordinary base label loses $\pi_j/2$.
+An unmatched $B'$ row loses exactly $\sigma_i$.
+Locked edges capture their row values and high prices in full.
+No initially covered column is lost.  Consequently the repaired
+logarithmic score $S(M)$ satisfies
+\begin{equation}\label{simp:conditional-loss}
+ J-S(M)\le C(M)+
+   \sum_{j\notin\mathrm{im}(M)}\pi_j
+   +\frac12\sum_{\substack{e\in M:\ i(e)\in A'\\e\text{ ordinary}}}\pi_{j(e)}.
+\end{equation}
+
+Apply \eqref{simp:mandatory-bound} to the heads in each $H_i$ that
+remain in the unlocked graph and have $c_{ij}\le T$.
+The initial count deficit pays $(P/(r-1))(r-h_i)^+$.
+Every additional deleted head costs at most $P/(r-1)$.
+A high-price deleted head is paid by $K/2$, once only by disjointness.
+A retained low-price head is paid by $\kappa(1-e^{-c_{ij}})$:
+the function $c/(1-e^{-c})$ is increasing, so
+\eqref{simp:graph-parameters} gives
+$\theta c/(r-1)\le\kappa(1-e^{-c})$ on $[0,T]$.
+A deleted low-price head has $c>T$ and costs at most
+$\kappa(1-e^{-T})$.  The candidate contract rules out any other
+missing small-deficit head.  The private dummy costs give the second
+term of \eqref{simp:repair-ledger}.
+
+It remains to pay the last two terms of \eqref{simp:conditional-loss}.
+Let $Z_j$ be the original new mass at column $j$, and $A_j^A$ the
+original ordinary mass from rows of $A$.  At a positive-price column,
+the original cost-two load is one.  Its ordinary load is $1-Z_j$,
+so its probability of being unused by $M$ is $Z_j$.
+All high-price columns are locked.  Hence the expected price loss is
+\[
+ \sum_{j:\pi_j\le K}\pi_j\left(Z_j+\frac12 A_j^A\right)
+       \le\frac12\sum_{j:\pi_j\le K}\pi_j,
+\]
+because $2Z_j+A_j^A\le1$.  Combine this with the high-price charges,
+the network bound, and the common realization to prove
+Theorem~\ref{simp:repair-theorem}.
+
+\paragraph{The NSW constants satisfy one short contract.}
+Take
+\[
+ r=4,\quad K=\frac76L,\quad T=\frac{12}{5}L,\quad
+ \theta=\frac7{10},\quad P=\frac{43}{25}L,\quad
+ \kappa=\frac6{25},\qquad L=\log(1.00032357).
+\]
+Here $0<L<1/3000$, $P=L+(1-\theta)T$, and $P>\theta T$.
+The two nontrivial inequalities reduce to
+\[
+ \frac{43}{75}<\frac7{12},\qquad
+ \frac{43}{75}
+ <\frac6{25}\frac{12}{5}
+                  \left(1-\frac6{5\cdot3000}\right).
+\]
+They are rational comparisons; $1-e^{-T}\ge T-T^2/2$ proves the
+exponential comparison.  No table of graph constants is needed.
+
+\subsection{Finite weights and why one sample preserves the guarantee}
+
+The theorem also applies to rational upper log weights.  Solve their
+LP exactly and preserve every supported label; a support-size or
+dual-stability assumption is unnecessary.  If every selected score
+overstates its certified payoff by at most $\varepsilon_s$, then the
+realization loses at most $n\varepsilon_s$, since each row's masses
+sum to one.  For coherent new weights $n=\ell^{(.4)}+\Lambda$, their
+supported prices obey $\pi_j\le\Lambda$ exactly.
+
+Use rational repair constants $\Lambda<K_0$, $T_0\le T$, $P_0\le P$
+with
+\[
+ P_0\ge\Lambda+(1-\theta)T_0,\qquad
+ \frac{P_0}{r-1}\le\frac{K_0}{2},\qquad
+ \frac{\max(P_0,\theta T_0)}{r-1}
+                         \le\kappa(1-e^{-T_0}).
+\]
+Let computed deficits and private gaps obey $\widehat c\le c$ and
+$\widehat\sigma\le\sigma$.  Assume every $\widehat c\le T_0$ candidate
+has its local certificate.  The same proof pays the computed repair
+by the original true ledger: deletion of a column locked above $K_0$
+costs at most $P_0/(r-1)\le K_0/2\le\min(\pi_j,K)/2$;
+retained deficits are smaller; and
+a deleted low head has $c\ge\widehat c>T_0$ and hence pays its dummy
+charge before the original arithmetic cap is reached.  The private
+charges only decrease.  This is one-sided domination, not continuity
+of a threshold indicator.
+
+Condition on the entire online history and the selected residual
+iterate $x$.  The matching sample has the prescribed ordinary label
+marginals, and the minimum-cost repair for that sample is independent
+of every comparator.  Thus \eqref{simp:repair-ledger} holds after
+conditioning on $x$ and then averaging the sample.  Taking total
+expectations over the uniformly selected iterate preserves the same
+radial/regret bound as a deterministic best-of-all-components choice.
+There is no need to evaluate any repaired component's true score.
+
+An exact rational matching sampler can be replaced by its finite
+dyadic implementation.  Its support still consists of feasible
+matchings, and the total variation error is paid against the known
+reservation/full-set logarithmic range.  Subsequent conditional
+rounding is also feasible on every history.  Therefore the finite
+expected-log guarantee and its Jensen consequence are unchanged up
+to an arbitrary chosen error.  Finally, if one complete run has
+$\mathbb E[\log\mathrm{OPT}-\log\mathrm{NSW}]\le\log R_\star+\xi$,
+Markov amplification applies to that run, including its matching
+sample.  Explicitly, for $0<\varepsilon\le1$, take
+$\xi\le\varepsilon/12$ and $R_\star<2$.  If
+$Y=\log(\mathrm{OPT}/\mathrm{NSW})\ge0$ and
+$a=\log(R_\star+\varepsilon)$, then
+\[
+ a-\mathbb EY\ge
+ \log(1+\varepsilon/R_\star)-\varepsilon/12
+ \ge\varepsilon/4,\qquad a<3/2.
+\]
+Here $\log(1+x)\ge x/(1+x)$ gives the second inequality.
+Thus $\Pr\{Y<a\}\ge1-\mathbb EY/a\ge\varepsilon/6$.
+Taking $\lceil(6/\varepsilon)\log(1/\delta)\rceil$ independent
+complete runs and retaining the actual largest utility product gives
+success probability at least $1-\delta$.  No internal repaired-score
+comparison is used.
+
+The minimal algorithmic primitives of this section are: one hybrid
+LP solve; ordinary bipartite matching sampling by cycle rounding;
+one integral min-cost flow with lower bounds; the common one-function
+forest program; and one final maximum-product reserved matching.
+The first primitive is already used by the online update.  Only the
+last four are executed at its one selected iterate.

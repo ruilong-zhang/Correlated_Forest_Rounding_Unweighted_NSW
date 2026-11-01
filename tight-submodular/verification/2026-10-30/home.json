@@ -1,0 +1,77 @@
+{
+  "status": "PASS_COMPACT_GLOBAL_HOME",
+  "profile_sha256": "5f4577e4e79bccbfbeb947c8790d823a49ee696b9278d69a7b2a9124edf83825",
+  "private_mean_domain": [
+    "0",
+    "4"
+  ],
+  "q_domain": [
+    "0",
+    "3/8"
+  ],
+  "profile_intervals": 4000,
+  "visited_q_boxes": 23669,
+  "accepted_q_boxes": 13806,
+  "home_candidate_reserve": "1/1000",
+  "maximum_depth": 4,
+  "smallest_box_margin": "[0.00100283576523895629941836448187113838996285685580058289859 +/- 3.85e-60]",
+  "witness": [
+    1678,
+    "0",
+    "3/32"
+  ],
+  "tail_shifted_polynomial_coefficients": [
+    "94333/12250",
+    "29728/4375",
+    "747/625"
+  ],
+  "elapsed_seconds": 0.14145379199180752,
+  "analytic_gates": {
+    "count": 31,
+    "checks": {
+      "compact_q_domain_contains_true_domain": true,
+      "HOME_c_bracket": true,
+      "tail_is_below_exponential_floor_scale": true,
+      "tail_HOME_argument_beyond_affine_join": true,
+      "floor_admissibility_uses_only_c0": true,
+      "global_floor_above_five_candidate_cutoff": true,
+      "private_floor_bounds_D": true,
+      "tail_smooth_lower_coefficient": true,
+      "tail_smooth_implies_linear_HOME": true,
+      "tail_M_linear_base": true,
+      "tail_M_quadratic_base": true,
+      "active_M_crossover": true,
+      "active_M_elasticity_majorant": true,
+      "active_M_elasticity_below_two_thirds": true,
+      "linear_M_subcap_scale": true,
+      "M_subcap_slope_below_t_one": true,
+      "linear_HOME_subcap_slope": true,
+      "smooth_subcap_height_small_r": true,
+      "smooth_subcap_derivative_small_r": true,
+      "smooth_subcap_height_tail_r": true,
+      "smooth_subcap_derivative_tail_r": true,
+      "compact_start_above_boost_cap": true,
+      "zero_D_near_one": true,
+      "tail_W_linear_gain": true,
+      "tail_smooth_credit_coefficient": true,
+      "tail_linear_credit_coefficient": true,
+      "localized_five_candidate_derivative": true,
+      "localized_inactive_shortcut": true,
+      "half_price_net_nonnegative": true,
+      "half_price_cap_below_join": true,
+      "localized_max_credit_decrease": true
+    },
+    "margins": {
+      "smooth_subcap_height_small_r": "[0.000298258343752797900414714167096950058885864029070518622 +/- 5.94e-58]",
+      "smooth_subcap_derivative_small_r": "[0.571318601242783080414905534335556575800787355578098042139 +/- 8.79e-58]",
+      "smooth_subcap_height_tail_r": "[0.004169364360085799636309384156236391262120207810619545904 +/- 6.81e-58]",
+      "smooth_subcap_derivative_tail_r": "[0.21529281930084993987911539212168782993839395128832515706 +/- 4.09e-57]",
+      "tail_W_linear_gain": "[0.001199696595058673570962682487716588013972151839832892821 +/- 2.74e-58]",
+      "tail_smooth_credit_coefficient": "[0.04235101727043475179642710191082644570352614844443722932 +/- 2.08e-57]",
+      "tail_linear_credit_coefficient": "[0.158039816004279789026591024656769394897155448318494072604 +/- 4.88e-58]",
+      "localized_five_candidate_derivative": "[4.9833749168053573905977180036557772079081253837466884e-5 +/- 3.38e-58]",
+      "localized_inactive_shortcut": "[3.735454351684949483371743710927587101538110073884601e-6 +/- 2.73e-58]",
+      "half_price_net_nonnegative": "[5.451963129366268612246720369721047024644629959839378e-5 +/- 2.75e-57]"
+    }
+  }
+}

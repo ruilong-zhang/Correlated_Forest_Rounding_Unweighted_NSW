@@ -1,0 +1,241 @@
+\section{Reservation and three physical programs}\label{simp:score-primitives}
+
+We have $n$ normalized nonnegative monotone submodular valuations
+$f_i:2^M\to\mathbb Q_{\ge0}$. Reserve a maximum-product positive singleton
+matching $i\mapsto h_i$ and put $H_0=\{h_i\}$, $M'=M\setminus H_0$,
+$d=|M'|$. If such a matching does not exist, $\OPT=0$: submodularity
+implies $f_i(S)\le\sum_{j\in S}f_i(j)$, so positive disjoint bundles
+would supply positive singleton representatives. The case $|M|<n$ is
+also immediate. Rescale each active row by $f_i(M')=1$; rows with
+$f_i(M')=0$ need no residual update. Thus $1/d\le B_i\le1$ on active
+rows, where $B_i=\max_{g\in M'}f_i(g)$.
+
+Put $p_{ij}=f_i(h_j)$ and $p_i^0=p_{ii}>0$. Give arc $i\to j$ weight
+$p_{ij}/p_i^0$ and let $s_j$ be the largest product of a simple path
+ending at $j$, or one. Every cycle has product at most one, or it would
+improve the reservation. Multiplicative Bellman--Ford computes $s_j$
+in $n-1$ rounds. Set $\alpha_i=p_i^0/s_i$ and $e^{\rho_j}=s_j$.
+Path extension, and a path followed by a best residual singleton, give
+\begin{equation}\label{na:reservation-dual}
+ B_i\le\alpha_i,\qquad p_{ij}\le\alpha_i e^{\rho_j},\qquad
+ p_{ii}=\alpha_i e^{\rho_i},\qquad\rho_j\ge0.
+\end{equation}
+These protection data are rational; the algorithm need not compute $\rho$.
+For independent $R_i\sim R(x_i)$, write
+$F_i=\mathbb Ef_i(R_i)$ and $d_{ij}=\mathbb Ef_i(R_i+h_j)-p_{ij}$.
+Then $0\le d_{ij}\le F_i\le p_{ij}+d_{ij}$, and every residual
+marginal of the raw valuation or a contraction is at most $\alpha_i$.
+
+\subsection{One fixed mixture and its private profile}
+
+Define
+\[
+ h^{C}_{p,\alpha}(X,V)=\max\{p,\min(V,X/\theta),\theta\alpha\},\quad
+ h^{A}_{p,\alpha}(X,V)=\max\{X,p,aV,\theta\alpha\},\quad
+ \mathcal H_{p,\alpha}=\prod_c h_{c,p,\alpha}^{\omega_c}.
+\]
+All entries below are exact rationals; the weights sum to one.
+\begin{center}
+\begin{tabular}{crrr}
+\toprule Type & $a$ & $\theta$ & $\omega$\\\midrule
+$C$ & --- & $1$ & $.166466453839$\\
+$A$ & $.75$ & $.592592592592$ & $.048883852144$\\
+$A$ & $.80$ & $.488281250000$ & $.044226298717$\\
+$A$ & $.90$ & $.258117479171$ & $.032834490836$\\
+$A$ & $.925$ & $.196045038119$ & $.021914693827$\\
+$A$ & $.999$ & $.002716922574$ & $.254146426697$\\
+$C$ & --- & $.0005$ & $.156660002590$\\
+$C$ & --- & $.5$ & $.274867781350$\\\bottomrule
+\end{tabular}
+\end{center}
+Let $\theta_0=1/2000$, $\Gamma=\prod_c\theta_c^{\omega_c}$,
+$H(s)=\prod_c\max(s,\theta_c)^{\omega_c}$, and $f=\log H$. The private score is
+\begin{equation}\label{na:private}
+ T_{i0}=\alpha_iG(F_i/\alpha_i),\qquad
+ \log G(m)=\min\{\mathbb Ef(Y):Y\ge0,\ \mathbb EY=m,
+                  |\operatorname{supp}Y|\le2,\ \operatorname{width}(Y)\le1\}.
+\end{equation}
+It has $G(0)=\Gamma>.0487864347$ and $G(m)\ge c_0m$, $c_0=.3999999$.
+To evaluate it, use all knot chords with endpoints in
+$\Theta=\{0\}\cup\{\theta_c\}$ and the single interval minimum
+\begin{equation}\label{na:G-evaluation}
+ \min_{\max(0,m-1)\le L\le m}
+ [(L+1-m)f(L)+(m-L)\log(L+1)].
+\end{equation}
+A minimizing law of width less than one can move either endpoint to a
+knot: on a piece $f=C+\omega\log x$, an interior stationary chord has
+negative second derivative, unless it is constant. Otherwise its width
+is one; its upper endpoint is then at least one. This proves the reduction,
+including degenerate laws. Shifting and truncating a law shows that $G$
+is nondecreasing and $\log G$ is $1/\theta_0$-Lipschitz. The objective in
+\eqref{na:G-evaluation} is $2/\theta_0$-Lipschitz in $L$, so a rational
+mesh of an interval of length at most one gives a polynomial-work oracle.
+
+\subsection{The physical programs}
+
+For one row and head suppress indices and put $q=.1F+.9d$. There are
+three nonconstant ordinary programs:
+\begin{equation}\label{na:proxies}
+ \begin{split}
+ A_p(d)&=\max\{(p+.395494177d)/1.00024010,
+                   (p+.4d)/1.00032357,(p+.5d)/1.02631852\},\\
+ B_p(q)&=\max\{(p+.9q)/1.19092969,(p+q)/1.23726325\},\\
+ J_p(F,d)&=m-E(\max\{d_sp,m-b_s\alpha\},b_s\alpha),\qquad
+ m=c_sF+d_s(p+d),
+ \end{split}
+\end{equation}
+where $c_s=.27140539$, $d_s=.72149518$, $b_s=c_s+d_s$.
+Only the first branch of $A_p$ is unconditional; all other affine
+branches require $\alpha\le4p$ and are omitted otherwise. The stored
+functions, with constant baselines subtracted, are respectively
+$f(S+h)-p$, $.1f(S)+.9(f(S+h)-p)$, and
+$c_sf(S)+d_sf(S+h)-d_sp$. Thus the five affine pieces require only two
+programs; their maxima preserve exactly the same means and dual constraints.
+
+For $A,G>0$ the loss in \eqref{na:proxies} is
+\begin{equation}\label{na:loss}
+ E(A,G)=G\varepsilon(A/G),\qquad
+ \varepsilon(r)=r+\frac{\log(1/[r\log(1+1/r)])-1}{\log(1+1/r)},
+\end{equation}
+with $E(0,G)=G$ and $E(A,0)=0$. Nonpositive scores are ignored.
+Include the singleton $p$. Only the home edge also has
+\begin{equation}\label{na:home-score}
+ \widetilde T_H=\max\{p,\min(p+\alpha v(d/\alpha),F/\beta)\},\qquad
+ v(r)=\begin{cases}2^r-1&r\le r_*,\\r-\epsilon_*&r\ge r_*,\end{cases}
+\end{equation}
+where $\beta=1-e^{-1}$, $\ell=\log2$,
+$r_*=\log(1/\ell)/\ell$, and $\epsilon_*=1+r_*-1/\ell$.
+HOME stores the union contraction. A singleton stores a constant.
+A physical score at most $T_{i0}$ may be dropped: moving its mass to the
+private option frees column capacity and does not lower the objective.
+In particular there are no physical copies of the private guard.
+At $p=0$ the original physical kernel equals the private kernel, so any selected
+zero-singleton edge may also be released privately.
+
+The auxiliary NEW label is
+\begin{equation}\label{simp:new-score}
+ N_{ij}=p_{ij}+(2/5)d_{ij},\qquad
+ F_i\le(3/40)p_{ij},\quad\alpha_i\le(21/20)p_{ij}.
+\end{equation}
+Its column cost is two; ordinary programs have cost one.
+Repair may additionally use NEW candidates with $\alpha_i+F_i\le5p_{ij}/3$.
+These additional candidates impose no constraint on the auxiliary dual.
+
+\subsection{Why every single program is valid}
+
+The intended outcome payoff of an ordinary label is
+$\log\mathcal H_{p,\alpha}(f(S),f(S+h))$; HOME may use the stronger
+$\log f(S+h)$, and the private payoff is $\log[\alpha H(f(S)/\alpha)]$.
+Section~\ref{simp:completion-section} places all these payoffs under one
+pointwise bound for the final rematching. Here we verify their scores
+under a last-coin law of raw width at most $\alpha$.
+
+For two nested outcomes there are nonnegative $(r,d,o,v,c)$ with
+\[
+ p=r+o+c,\quad X_0=d+o,\quad X_1=d+o+v+c,\quad
+ V_0=p+d,\quad V_1=p+d+v,\quad g=X_1-X_0=v+c.
+\]
+Indeed these are the successive raw, union, and overlap increments.
+Since $g\le\alpha$, protection can be lowered to $g$. Each affine piece
+$(p+k[\chi F+(1-\chi)d])/R$ is certified by
+\begin{equation}\label{simp:two-point-test}
+ \frac{p+k[d+\chi o+q(v+\chi c)]}{R}
+ \le\mathcal H_{p,g}(X_0,V_0)^{1-q}\mathcal H_{p,g}(X_1,V_1)^q
+ \quad(0\le q\le1).
+\end{equation}
+Partition the nonnegative cone at all ties of linear factor forms;
+conditional pieces also impose $v+c\le4p$. On each cone, the right
+side is a homogeneous concave function, being a weighted geometric mean
+of linear forms, with exponents summing to one. Subtracting the linear
+left side preserves concavity. It therefore suffices to check extreme
+rays, enumerated exactly by intersections of four independent partition
+hyperplanes in five dimensions, including boundaries and ties.
+On a ray the logarithmic difference is $\log(a+bq)-L-\Delta q$,
+where $a,b$ are the numerator coefficients,
+$L=\log(R\mathcal H_0)$, and $\Delta=\log(\mathcal H_1/\mathcal H_0)$.
+Its maximum occurs at an endpoint or at
+$q=[1/\Delta-a/b]_0^1$ when $b\Delta>0$. No grid in $q$ is used.
+The four conditional pieces share 60 hyperplanes and 9,326 rays.
+For the unconditional contraction piece, decrease raw values to
+$X_j=V_j-p$ and protection to the union increment; the analogous
+three-dimensional enumeration has 727 rays.
+Directed arithmetic verifies every resulting comparison.
+
+For the joint program the finite pointwise certificate is
+\begin{equation}\label{na:pointwise-joint}
+ \mathcal H_{p,0}(X,V)\ge c_sX+d_sV
+ \quad\text{for }\max(X,p)\le V\le X+p.
+\end{equation}
+Normalize $V=1$. The factor ties partition the triangle
+$0\le X,p\le1$, $X+p\ge1$ into cells on which the left side minus
+the affine right side is concave. Exact enumeration gives 64 vertices,
+and directed checks prove \eqref{na:pointwise-joint} there.
+For $Y=A+GZ$, $\Pr(Z=1)=q$, its arithmetic minus geometric mean deficit
+is $A+qG-A^{1-q}(A+G)^q$. It decreases with $A$, increases with $G$,
+and its maximum over $q$ is \eqref{na:loss}, by differentiation.
+The preserved joint mean has width at most $b_s\alpha$ and lower endpoint
+at least $\max(d_sp,m-b_s\alpha)$. This proves the joint score.
+Also $\varepsilon$ is convex and decreasing, as the supremum of the
+convex decreasing deficits $r+q-r^{1-q}(r+1)^q$; hence its perspective
+$E$ is jointly convex. Taylor's theorem gives
+\begin{equation}\label{simp:loss-tail}
+ E(A,G)\le G^2/(8A)\qquad(A>0),
+\end{equation}
+since the gap's second derivative in $G$ is at most $1/(4A)$.
+
+The private score follows immediately from \eqref{na:private}.
+For a HOME law $p+a+bZ$, $b\le\alpha\le p$, and $\ell\le c\le1$,
+\[
+ \exp\mathbb E\log(p+a+bZ)\ge p+c(a+qb)-\alpha\epsilon(c),\quad
+ \epsilon(c)=1+\frac c\ell\left(\log\frac c\ell-1\right).
+\]
+Removing $a$ and decreasing $p$ can only increase the deficit; its
+convex dependence on $b/\alpha$ reduces to the endpoints. At
+$p=b=\alpha$ the remaining maximum is
+$\max_q(1+cq-2^q)=\epsilon(c)$. Maximizing over $c$ proves $v$.
+Clipping only lowers this score. All these bounds are nondecreasing
+in the one stored mean, so they remain valid after that mean increases.
+
+The clipping also preserves the HOME score needed by the controller.
+With $Q=\max\{0,\max_j(F-d_j-\beta p_j)\}$, set
+$d'=(F-Q-\beta p)^+\le d$. If $F/\beta\le p$ the claim is immediate;
+otherwise $d'\le F-\beta p$ and $v(r)\le r$ give
+$p+\alpha v(d'/\alpha)\le F+e^{-1}p\le F/\beta$.
+Thus $\widetilde T_H\ge p+\alpha v(d'/\alpha)$.
+
+\subsection{A finite lower profile, used only in certificates}
+
+The same two-point cone argument in dimension two verifies $G(m)\ge c_0m$.
+For lower endpoint at least one all factors equal the raw value, and the
+arithmetic-to-geometric ratio decreases with that endpoint, so the last
+unbounded interval reduces to its endpoint at one.
+For sharper bounds retain 4,001 positive nondecreasing rational targets
+$L_i\le G(i/1000)$, $0\le i\le4000$.
+Their proof uses the exact reduction \eqref{na:G-evaluation}.
+An affine support proposed for the knot chords is checked below $f$ at
+every knot; concavity between knots then proves it below the entire chord.
+For a full-width law put
+$J(L,m)=(L+1-m)f(L)+(m-L)\log(L+1)$. On a piece
+$f(L)=C+\omega\log L$,
+\[
+ L^2(L+1)^2J_{LL}
+ =\omega(L+m-1)(L+1)^2-(L+m+2)L^2.
+\]
+Its four rational Bernstein coefficients certify curvature on an interval.
+Concavity or a one-sign enclosure of $J_L$ reduces to endpoint tests;
+convexity permits the lower tangent bound
+$J(s)-|J_L(s)|(v-u)/2$, $s=(u+v)/2$. Otherwise use a direct interval
+bound and bisect. The initial constant piece includes $L=0$.
+The complete replay uses 122,316 interval tests, maximum depth 11.
+
+On $[i/1000,(i+1)/1000]$, interpolate $L_{\max(0,i-1)}$ to $L_i$;
+after four keep $L_{3999}$ constant. Denote this delayed profile by
+$\underline G$. Monotonicity gives $\underline G(m)\le G(m)$ without
+assuming concavity of $G$. A certified lower envelope is
+\begin{equation}\label{fd:private-lower}
+ P(m)=\max\{c_0m,\underline G(m),[m-1/(8(m-1))]^+\ (m>1)\},
+\end{equation}
+where the last entry is zero for $m\le1$ and follows from
+\eqref{simp:loss-tail}. Thus $DP(t/D)\le1$ is a valid relaxation of
+$DG(t/D)\le1$. The exact algorithm uses \eqref{na:private}; the finite
+profile and all ray enumerations belong solely to its proof.

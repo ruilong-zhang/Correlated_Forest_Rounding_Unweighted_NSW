@@ -1,0 +1,230 @@
+\section{One controller and a final rectangular classification}
+\label{simp:algorithm-interface}
+
+The graph theorem needs a class of compatible rows, but the online
+update does not.  This section gives the exact and finite interfaces
+that separate these two roles.  It uses the score facts in
+Section~\ref{simp:score-primitives}, the compatible minorants in
+Section~\ref{simp:minorants}, and the scalar controller in
+Section~\ref{simp:controller-section}.  All constants displayed as finite
+decimals are exact rational numbers.
+
+Write $z=e^{-1}$, $\beta=1-z$, $k=1/(4\beta)$,
+$R_4=1.00032357$, $L=\log R_4$, and
+\[
+ T_A=\frac3{25},\qquad
+ D_A=\frac{21}{20}R_4^2,\qquad
+ D_m=\frac{26267}{25000},\qquad
+ P=\frac{43}{25}L.
+\]
+At an iterate $x$, solve the cost-two LP of
+\eqref{simp:hybrid-lp} and retain one complementary optimal pair.
+Set $u_i=e^{v_i}$, $t_i=F_i/u_i$, $D_i=\alpha_i/u_i$, and
+$\sigma_i=\log(u_i/T_{i0})$.  The private score $T_{i0}$ and all
+physical scores use this same residual point and this same dual.
+
+\subsection{The uniform online controller}
+
+Write $C(t,D;\mu)=C(t,D,0;\mu)$ for the HOME credit from
+Section~\ref{simp:controller-section}, and put
+\[
+ H(\mu;t,D)=C(t,D;\mu)-\mu t+1+\log\mu,
+ \qquad \underline\mu(D)=\frac{k}{\max(1,D)}.
+\]
+The credit is a minimum of expressions of the form $\mu q+c_q$,
+with $q\ge0$.  Hence $H$ is increasing on
+$(0,\min(1,1/t)]$.  On private-feasible states the scalar theorem
+guarantees that its endpoint reaches each target used below.
+Use the single rule
+\begin{equation}\label{simp:uniform-controller}
+ b_i=\frac13\min(\sigma_i,P),\qquad
+ \mu_i=\max\{\underline\mu(D_i),r_{b_i}(t_i,D_i)\},
+ \qquad H(r_b;t,D)=b.
+\end{equation}
+The subsequent radial selector and residual update do not
+differentiate this root, the auxiliary LP, or a chosen optimum.
+
+\begin{lemma}[The boosted root already equals the floor on A]
+\label{simp:uniform-floor}
+For $0\le t\le T_A$ and $0\le D\le D_m$, every target
+$0\le b\le P/3$ gives $\mu=\underline\mu(D)$ in
+\eqref{simp:uniform-controller}.
+The assertion remains valid for $t\le T_A+10^{-10}$.
+\end{lemma}
+\begin{proof}
+The localized transfer has branches
+\[
+ \log M(e^{\pi-\rho}),\quad \frac35\pi,\quad h(\pi),
+ \qquad
+ M(s)=1+\min\left\{\frac{(9s/16)^2}{1+9s/16},\frac5{16}s\right\},
+\]
+where, with $a=1/1000$,
+\[
+ h(s)=s-\min\{(1-e^{-10s})/10,(1-e^{-10a})/10\}.
+\]
+The maximum decrease of the last branch below $(3/5)s$ is
+$(1-e^{-10a})/10-(2/5)a<3/5000$.  Indeed the difference
+increases up to $a$ and decreases after $a$.
+The HOME profile is at least $\max(1,D)$, and
+$M(1)=481/400>D_m$.  Thus, for $1\le D\le D_m$,
+$C(t,D;\mu)\ge(3/5)\log D-3/5000$; for $D\le1$ the
+credit is nonnegative.  At the floor, in both cases,
+\[
+ H(\underline\mu;t,D)\ge
+ 1+\log k-\frac25\log D_m
+       -k(T_A+10^{-10})-\frac3{5000}
+ >\frac1{250}>\frac P3.
+\]
+The floor lies below $\min(1,1/t)$, since $k<1$ and
+$k(T_A+10^{-10})<1$.  Monotonicity of $H$ proves the claim.
+\end{proof}
+
+Consequently the same controller supplies the A floor and the B
+private-gap budget.  No online branch tests row membership.
+
+\subsection{One rectangle, tested only at the selected iterate}
+
+After the online process selects an iterate uniformly, define
+\begin{equation}\label{simp:rectangular-A}
+       A=\{i:t_i\le T_A,\ D_i\le D_A\},\qquad B=[n]\setminus A.
+\end{equation}
+All supported NEW labels lie in this rectangle.  Indeed a NEW score
+$N=p+(2/5)d$ has the same-head ordinary score $N/R_4$, so its
+complementary constraints imply $\pi\le L$ and $N/u=e^{2\pi}\le R_4^2$.
+Its eligibility conditions $F\le(3/40)p$ and
+$\alpha\le(21/20)p$, together with $p\le N$, now give
+\[
+       t\le(3/40)R_4^2<T_A,\qquad D\le D_A<D_m.
+\]
+The private bound $T_{i0}\le F_i+(37/100)\alpha_i$ gives
+$T_{i0}/u_i\le T_A+(37/100)D_m<1$ on A, so A has no private mass.
+The minorant theorem applies on the slightly larger rectangle
+$t\le T_A,D\le D_m$; it covers every supported ordinary label
+and every small-deficit NEW repair candidate.  In particular it
+permits the one ordinary plus one NEW, or two NEW, choices in the
+network.  All B rows have no supported NEW and use one original
+program after repair.  Thus \eqref{simp:rectangular-A} satisfies
+the full local contract of Theorem~\ref{simp:repair-theorem}.
+
+The online procedure is therefore just: form the scores, solve one
+LP, evaluate \eqref{simp:uniform-controller}, and make the radial
+update.  At its one selected iterate, classify by
+\eqref{simp:rectangular-A}, sample one ordinary matching, solve one
+minimum-cost flow, run the common forest rounding, and rematch the
+reserved items.  Section~\ref{simp:graph} proves the conditional
+expected-log guarantee of this one matching sample; no repaired
+component scores are compared.
+
+\subsection{A finite interface with strict, one-sided tests}
+
+Here are all additional local tolerances required by these
+simplifications.  Let $0<\eta\le\eta_0=10^{-10}$.  On an accurate
+history, let every ordinary and private rational log weight be an
+upper bound with error at most $\eta$.  Define NEW weights from the
+individual conditional $.4$ entry, before any maximum, by
+\[
+       n_{ij}=w^{(.4)}_{ij}+\Lambda,
+       \qquad L\le\Lambda\le L+\eta.
+\]
+Thus $\log N_{ij}\le n_{ij}\le\log N_{ij}+2\eta$ and every
+supported NEW price satisfies $\pi_j\le\Lambda$ exactly.
+Use a lower confidence endpoint in the raw eligibility test;
+every true eligible label is then present, and an additionally
+enabled label has $F\le(3/40)p+\eta u$.
+
+Obtain enclosing intervals $[t^-,t^+]$, $[D^-,D^+]$ of width
+at most $\eta$.  The finite final classifier is
+\begin{equation}\label{simp:finite-rectangle}
+       t^-\le T_A,\qquad D^-\le D_A+6\eta.
+\end{equation}
+The constant $D_A$ is evaluated as its exact rational value. Since
+$D_Ae^{2\eta}\le D_A+6\eta$ and
+$(3/40)R_4^2e^{2\eta}+\eta<T_A$, this includes every supported
+rational NEW label.  Every classified A row satisfies
+\[
+       t\le T_A+\eta,\qquad
+       D\le D_A+7\eta<D_m.
+\]
+Every classified B row belongs to the exact complement of
+\eqref{simp:rectangular-A}.  There is no adverse B boundary strip.
+Lemma~\ref{simp:uniform-floor} covers the small additional A strip
+with the same boosted target.
+
+Use rational repair thresholds
+\[
+ K-\eta\le K_0\le K,\qquad
+ T-5\eta\le T_0\le T-4\eta,\qquad
+ P_0=\Lambda+(3/10)T_0,
+\]
+where $K=7L/6$ and $T=12L/5$.
+Then $P_0\le P$, and the strict comparisons
+\[
+ \Lambda<K_0,\qquad
+ \frac P3<\frac{K-\eta_0}{2},\qquad
+ \frac P3<\frac6{25}(1-e^{-(T-5\eta_0)})
+\]
+give exactly the finite graph contract.  Set
+$\widehat c_{ij}=(v_i+2\pi_j-n_{ij})^+$.  These computed deficits
+do not exceed the true deficits.  Every $\widehat c\le T_0$ head
+satisfies the broad minorant condition $\alpha+F^+\le5p/3$:
+\[
+ \frac p u\ge e^{-T_0-2\eta}-\frac25t
+ \ge R_4^{-3}(1-2\eta)-\frac25(T_A+\eta)
+ >\frac35(D_m+T_A+2\eta).
+\]
+The definition of $n$ is used only when $\alpha\le4p$.
+Otherwise $N/u<D/4+(2/5)t<R_4^{-3}(1-2\eta)$, so the head
+already has a deficit above $T$ and may be omitted.
+The minorant proof's strict exclusions also survive these
+tolerances: a supported ordinary score is at least $ue^{-\eta}$;
+a score within $\eta$ of its singleton may be replaced by that
+constant at cost $\eta$, and every remaining supported score
+has the specified additive minorant.  All repaired row weights
+still sum to one, so score overstatements and constant replacements
+cost at most $2\eta$ per row.  The graph ledger itself is dominated
+one-sidedly as proved in Section~\ref{simp:graph}.
+
+For the only remaining A boundary, set
+$u'=u\max(1,t/T_A)$, leaving all item prices fixed.
+Then $t'\le T_A,D'\le D_m$, and
+$s=\log(u'/u)\le\eta/T_A=(25/3)\eta$.
+This is a comparison point, not another LP solve.  The floor obeys
+\[
+ \frac\mu u=\frac{k}{\max(u,\alpha)}
+ \ge\frac{k}{\max(u',\alpha)}=\frac{\mu'}{u'}.
+\]
+The logarithmic comparator term changes by $s$.  The dimensional
+radial coefficient has negative part at most $\beta F$, so the
+scalar expression changes by at most
+\[
+ s+\beta F\left(\frac{k}{\max(u,\alpha)}
+          -\frac{k}{\max(u',\alpha)}\right)
+ \le(1+t/4)s<9\eta.
+\]
+Arithmetic deficits increase at $u'$; price and count charges stay
+fixed.  Thus this bound also covers the critical equality face.
+
+Finally, monotonicity of $C$ gives, for
+$0<\mu_1<\mu_2\le\min(1,1/t)$,
+\[
+ H(\mu_2)-H(\mu_1)
+ \ge\log(\mu_2/\mu_1)-t(\mu_2-\mu_1)
+ \ge\tfrac12(\mu_2-\mu_1)^2.
+\]
+Credit and target enclosures of radius $16\eta$, together with
+bisection to width $\eta$, therefore give an upper multiplier
+with error at most $32\sqrt\eta$.  No derivative lower bound at
+an endpoint is needed.  Since the normalized radial coefficient
+is at least $-\beta t$ and private feasibility gives
+$t\le1/.3999999$, the resulting scalar loss is at most
+$32\beta\sqrt\eta/.3999999$.  Together with the preceding
+$2\eta+9\eta$ terms this is below $64\sqrt\eta$ per row.
+The global precision schedule need only pay this explicit loss,
+the score primitive's sampling error, and the forest error of
+Lemma~\ref{simp:forest}.  It does not depend on a positive support
+lower bound, continuity of the selected LP solution, or the smallest
+numerical scalar margin.
+On an inaccurate history, retain feasibility by checking the absence
+of private mass on A and the required network bounds before repair;
+if a check fails, use the reserved matching.  The known reservation
+and full-set log values bound the loss of every such history.

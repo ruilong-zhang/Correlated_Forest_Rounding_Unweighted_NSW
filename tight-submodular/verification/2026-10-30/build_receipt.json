@@ -1,0 +1,18 @@
+{
+  "command": [
+    "g++",
+    "-std=c++17",
+    "-O3",
+    "-Wall",
+    "-Wextra",
+    "<SOURCE_ROOT>/certificate/verify_B_simple.cpp",
+    "-o",
+    "<REPLAY_ROOT>/verify_B"
+  ],
+  "compiler": "Apple clang version 21.0.0 (clang-2100.3.34.2)",
+  "executable_sha256": "2b8505a7ea77910fdfddbf23051aa8a8457d1229684a85af12b880278a753f75",
+  "exit_code": 0,
+  "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "seconds": 1.2083161250920966,
+  "source_sha256": "aec3837ba89a0a3d49f798cc91a014e724a33a883283e91351163068deec7df8"
+}

@@ -1,0 +1,189 @@
+\section{One directed verifier for all remaining B cases}\label{simp:scalar-B}
+
+B is the complement of $t\le3/25$, $D\le D_A=(21/20)R_4^2$.
+Its desired inequality is
+$\mathcal E(H)+\Psi(H)+b\le U_\star+(h-1)\lambda_\star$.
+We certify the strictly smaller rational allowances
+\[
+ U_0=.6905799<U_\star,\qquad\lambda_0=.2319048039<\lambda_\star.
+\]
+The uniform band in Section~\ref{simp:scalar-band} has no external
+positive-head premise, so all four bounded covers use the same source
+and may be checked independently.
+
+\subsection{The smaller head-score interface}
+
+On B the NEW inequality is redundant. If an eligible NEW head has
+$n=y+.4(t-S)<R_4^2$, its eligibility gives
+$t\le(3/40)y<(3/40)R_4^2<3/25$ and
+$D\le(21/20)y<D_A$, contradicting B. Thus $n\ge R_4^2$ and its
+ordinary $.4$ score $n/R_4\ge\sqrt n$ already supplies the NEW bound.
+Equality is harmless on the closed cut. Also $c_0t\le1$, so physical
+private guards are redundant. Consequently $w_*$ contains only one,
+the singleton, the five affine pieces of the two programs, and the joint
+score. A conditional piece is used on a box only when enabled everywhere.
+
+\subsection{Root and objective enclosures}
+
+For a box $t\in[t_-,t_+]$, $D\in[D_-,D_+]$, use credit monotonicity:
+\[
+ H(\mu;t,D)\le C(t_+,D_+,0;\mu)-\mu t_-+1+\log\mu,
+\]
+\[
+ H(\mu;t,D)\ge C(t_-,D_-,0;\mu)-\mu t_++1+\log\mu.
+\]
+Bisection of the first expression at target zero gives a lower bound
+for the clipped multiplier. Testing the second against $P_c/3$ gives
+an upper bound. Start with the known admissible endpoint $\min(1,1/t_-)$;
+if a capped-target root does not exist, retain that endpoint.
+All trials are above the global floor $k/21>1/100$. Inconclusive directed
+comparisons widen the interval. If $D\le1$ and
+$t\le(1+\log k-P_c/3)/k$, the controller is exactly $k$.
+
+There are two useful ways to pay $b$. A direct bound subtracts the actual
+credit lower bound and adds at most $P_c/3$. Alternatively the actual
+controller gives $C(t,D,\widehat q;\mu)\ge\mu t-1-\log\mu+b$, hence
+\begin{equation}\label{simp:normalized-bound}
+ \mathcal E(H)+\Psi(H)+b
+ \le\log(\mu V_+)+1-\mu(\beta a+e^{-1}\gamma)
+                         -\sum_j\widetilde P_j.
+\end{equation}
+The same private target cancels exactly. There is no independent boost
+coordinate or additional debit in this normalized bound.
+
+Here are complete reductions for the finite box bounds. Put
+$Y=\sum y_j$, $S=\sum S_j$, $s=\min(t,S)$, $r=Y-(S-t)^+$,
+$e=t-s$, and $\kappa_1=1-2e^{-1}$. Maximizing the direct residual term
+in $a,\gamma$ reduces to the larger of
+\begin{equation}\label{simp:two-residual-branches}
+ \max_{0\le a\le e}[\log(a+r)-\mu\kappa_1a+\mu\beta t],\qquad
+ \max_{a\ge e}[\log(a+r)-\mu\beta a+\mu(t-e^{-1}s)].
+\end{equation}
+Shift mass from $a$ to $\gamma$ at fixed $a+\gamma$ while
+$\gamma\le\min(S,t)$; this preserves $V_+$ and lowers the radial cost.
+Once $\gamma\ge S$, choose its smallest value allowed by $a+\gamma\ge t$.
+Thus $\gamma=\max\{\min(S,t),t-a\}$ gives the two branches.
+Each maximum occurs at the clamped value $a=1/(\mu c)-r$ for its
+coefficient $c$. The result increases with $t,Y$ and decreases with $S$,
+so the appropriate box endpoints give the direct bound. Subtract a
+corner credit and headwise price lower bounds, then add $P_c/3$.
+The resulting supremum is convex in $\mu$ (a supremum of affine functions
+minus concave credit), so multiplier endpoints suffice.
+
+Sharper bounds preserve a price chord or a plane for each head.
+For fixed $D$, the five original owner branches are
+\[
+ \tfrac25\log w,\quad
+ \log\frac{w}{1+(5/16)w},\quad
+ \log\frac{wy}{y+(5/16)Dw},\quad
+ \log\frac{w(1+9w/16)}{1+9w/16+(9w/16)^2},
+\]
+\[
+ \log\frac{w[1+(9/16)Dw/y]}{1+(9/16)Dw/y+[(9/16)Dw/y]^2}.
+\]
+Each is increasing and jointly concave in its positive arguments.
+For the last four this follows by taking logarithms of the concave
+functions $x/(1+x)$ and $x(1+x)/(1+x+x^2)$ or their perspectives;
+the latter has second derivative $-6x(x+1)/(1+x+x^2)^3\le0$.
+The additional localized branch is $(499/1000)g(\log w)$, with the
+concave extension from \eqref{simp:price-envelope}. Subtract $K/2$ from
+the five original branches and take the maximum with zero.
+
+Compose one branch with one valid concave physical score, never with
+a maximum whose concavity is unproved. For a one-dimensional chord
+freeze $t=t_-$, $D=D_+$, $S_j=S_{j,+}$. For a two-dimensional plane
+use the rectangle in $(y_j,S_j)$ and, in the joint score, the affine
+floor $d_sy_j$ in place of its enhanced floor. The joint concavity
+then follows from convexity of $E$. A line below both endpoint values,
+or a plane below all four vertex values, lies below the chosen concave
+price function throughout the interval or rectangle. Retain its maximum
+with zero. The owner supremum of a linear function minus this lower
+price is attained at polygon vertices or intersections of its edges
+with the zero-price line; all are enclosed explicitly.
+
+Use $\log v\le\tau v-1-\log\tau$ in
+\eqref{simp:two-residual-branches}, or apply it to $\log(\mu V_+)$ in
+\eqref{simp:normalized-bound}. The former retains the credit and adds
+$P_c/3$. For the latter the expression is affine in $\mu$ at fixed
+comparator coordinates, so its supremum is convex and multiplier
+endpoints suffice. In the planar version, $0<\tau\le\beta$ and
+$0\le\nu\le\tau$ give the explicit upper bound
+\[
+ -\log\tau+\mu t\max\{\nu-e^{-1},\tau-\beta\}
+ +\sum_j\sup_{y_j,S_j}
+        [\mu\tau y_j-\mu\nu S_j-\max(0,\text{price plane}_j)] .
+\]
+Indeed $-(\sum S_j-\gamma)^+\le-(\nu/\tau)(\sum S_j-\gamma)$,
+and $a+\gamma\ge t$, $0\le\gamma\le t$ bound the residual linear
+part as displayed. Any rational tangent is valid; floating-point guesses
+choose witnesses and subdivision order only.
+
+\subsection{Complete covers, with directed arithmetic}
+
+The verifier covers two closed B rectangles in
+$[0,2.500000626]\times[0,21]$, with singleton cutoffs
+$Y_h=128,32,6,2$ for $h=1,2,3,4$. Order the $y_j$ without loss of
+generality and propagate $0\le S_j\le\min(t,y_j)$.
+Private exclusions use \eqref{fd:private-lower}; the delayed profile is
+piecewise affine in $D$ at fixed $t$, so its minimum occurs at an endpoint
+or a grid crossing. Its rational tail and $c_0t$ give additional exclusions.
+A leaf is accepted only by a proved analytic whole-box band, or by a
+strict upper bound from the preceding formulas. Otherwise the box is
+bisected exactly until all descendants are handled.
+
+All arithmetic uses outward intervals with denominator $I=2^{48}$,
+checked 128-bit products and signed directed integer quotients.
+Fresh 192-bit Arb enclosures generate the rational input and 36,885
+logarithm/loss-table nodes. Logarithms between nodes use lower chords
+and upper tangents after dyadic range reduction. The convex decreasing
+loss $\varepsilon$ uses upper chords, with its elementary bound one near
+zero and $1/(8r)$ in the tail. Localized exponentials use alternating
+polynomials with directed remainders. Branch uncertainty takes interval
+hulls. Neither tables nor guessed optimizers supply an unverified maximum.
+Independent Arb probes additionally audit arithmetic, price, credit and
+root enclosures, including absent-capped-root and boundary cases.
+
+\input{B_results.tex}
+
+\subsection{All unbounded heads}
+
+The owner bound gives $e^{-P_j}\le\min(1,M(D)/y_j)$ and
+$P_j\ge(2/5)\log\max(1,y_j)$. From $H(\mu)\ge b\ge0$ and
+$C\le\log M(D)$, $\mu\ge e^{-1}/M(D)>e^{-1}/8$.
+For a single $y\ge128$, $V_+=a+y-(S-\gamma)^+>125$ and
+$125>8/[e^{-1}(1-2e^{-1})]$. The residual expression decreases with $a$,
+so set $a=(t-\gamma)^+$. Its derivative in $\gamma\in[0,t]$ is
+$\mu(1-2e^{-1})$ or $\mu(1-2e^{-1})-1/V_+$, both positive.
+Thus $(a,\gamma)=(0,t)$ is optimal and
+\begin{equation}\label{simp:tail-gate}
+ \mathcal E_1+\Psi+b
+ \le\mu\beta t+\log M(D)-C(t,D,0;\mu)+K/2+b.
+\end{equation}
+A separate two-dimensional directed cover proves this below $U_0$ on
+the entire private-feasible domain. On a box, bisect the sufficient
+upper-root test $C(t_-,D_-,0;v)-vt_++1+\log v\ge P_c/3$.
+Its resulting upper enclosure $v_+$ gives the rigorous bound
+\[
+ v_+\beta t_++\log M(D_+)-C(t_-,D_-,0;v_+)+K/2+P_c/3,
+\]
+since credit slopes in $v$ are at most $e^{-1}t_-<\beta t_+$.
+Private-infeasible boxes are discarded, and unresolved boxes bisected.
+The complete replay visits 411 boxes, with 130 accepted and 76 excluded
+leaves, depth at most 14. Its upper bound is
+$.690423443261483775220432280686<U_0$, a margin greater than $.00015645$.
+
+For $h\ge2$, submodularity gives
+$\sum_{j\in H}V_+(H\setminus\{j\})\ge(h-1)V_+(H)$.
+Keeping the actual target, HOME credit and prices fixed, exponentiation
+of the smaller-count inequalities gives
+\[
+ \mathcal E_h+\Psi+b\le U_0+(h-2)\lambda_0+
+               \log\frac{\sum_j e^{-\widetilde P_j}}{h-1}.
+\]
+Every inverse charged price is at most one. A head $y\ge Y$ permits
+this deletion whenever
+$e^{K/2}Y^{-2/5}<(h-1)(e^{\lambda_0}-1)$.
+The exact directed gaps for $(h,Y)=(2,32),(3,6),(4,2)$ exceed
+$.01095,.03354,.02499$, respectively. Induct from the complete one-head
+bound, then two, three and four. This closes all B states with one
+through four heads; zero heads were proved by the controller theorem.

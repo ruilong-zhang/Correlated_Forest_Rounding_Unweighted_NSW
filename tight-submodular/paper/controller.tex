@@ -1,0 +1,298 @@
+\section{One controller and one endpoint proof}
+\label{simp:controller-section}
+
+Put $z=e^{-1}$, $\beta=1-z$, $k=(4\beta)^{-1}$, and $\ell=\log2$.
+Write
+\[
+ r_*={\log(1/\ell)\over\ell},\quad
+ \epsilon_*=1+r_*-1/\ell,\quad c=z-\epsilon_*,\quad h=\beta+r_*.
+\]
+The HOME profile is $v(r)=2^r-1$ up to $r_*$ and $r-\epsilon_*$
+thereafter.  Thus $7/25<c<2/7$, $h+c=1/\ell$, and
+\[
+ W(T,D)=\max\{1,D[1+v((T/D-\beta)^+)]\},\qquad W(T,0)=\max(1,T).
+\]
+Let
+\[
+ M(D)=1+\min\left\{{(9D/16)^2\over1+9D/16},{5D\over16}\right\},
+ \quad a_0=1/1000,\quad b_0=(1-e^{-10a_0})/10,
+\]
+\[
+ g(s)=\min\{(1-e^{-10s})/10,b_0\},\quad h_0(s)=s-g(s),\quad
+ \phi(\pi,\rho)=\min\{\log M(e^{\pi-\rho}),\tfrac35\pi,h_0(\pi)\}.
+\]
+For $0\le q\le zt$ define the actual credit lower bound
+\begin{equation}\label{simp:credit}
+ C(t,D,q;\mu)=\min_{q\le Q\le zt}
+ \{\mu Q+\min(\log M(D),\tfrac35\log W(t-Q,D),h_0(\log W(t-Q,D)))\}.
+\end{equation}
+It is nondecreasing in $t,D,q,\mu$ and concave in $\mu$.
+For example an optimizer at a larger $t$ can be clipped to the smaller
+upper endpoint $zt$; both $Q$ and $t-Q$ then decrease.  The other
+monotonicity statements follow directly from $W$; concavity follows from
+the infimum of affine functions.
+
+\subsection{A finite evaluation rule}
+
+On every smooth piece, $0\le\partial_T\log W(T,D)\le1$.
+The derivative is zero, $1/W$, or $\ell/D$; a positive exponential
+piece requires $D\ge\ell$.
+Define the floor-onset and exponential-to-linear join coordinates by
+\[
+ T_0(D)=\begin{cases}
+ 1-cD,&0<D\le\ell,\\
+ D(\beta-\log D/\ell),&\ell\le D\le1,\\
+ \beta D,&D\ge1,
+ \end{cases}\qquad T_*(D)=hD.
+\]
+Writing $E_0=e^{a_0}$, the level $W=E_0$ has coordinate
+\[
+ T_a(D)=\begin{cases}
+ E_0-cD,&0<D\le\ell E_0,\\
+ D(\beta+(a_0-\log D)/\ell),&\ell E_0\le D\le E_0.
+ \end{cases}
+\]
+For $\mu\ge1/100$, the minimum in \eqref{simp:credit} is attained at
+the endpoints $q,zt$ or at $t-T_0(D),t-T_*(D),t-T_a(D)$ clipped to
+$[q,zt]$; omit $T_a$ when $D>E_0$.  Indeed the constant cap minimizes
+at $q$, and each original HOME branch is affine or concave between its
+joins.  Where $0\le\log W\le a_0$, the new branch has derivative in $Q$
+at least $\mu-(1-e^{-10a_0})>0$; above $a_0$ it is again affine or
+concave.  These are all its additional endpoints.  At $D=0$ the
+credit is $\mu q$.
+
+One exact shortcut removes the localized branch whenever
+$D\ge401/400$ or $\beta t+cD\ge401/400$.
+Indeed $v(r)\ge r-\epsilon_*$ gives
+$W(t-Q,D)\ge\max\{D,\beta t+cD\}$ for every $Q\le zt$.
+The directed inequality $(2/5)\log(401/400)>b_0$ then implies
+$h_0(\log W)>(3/5)\log W$ throughout the minimization interval.
+The localized branch and its extra $T_a$ endpoint may therefore both
+be omitted there.
+
+\subsection{The base endpoint: one finite check and an analytic tail}
+
+Let $G$ be the protected private profile.  Its certified lower values
+$L_j\le G(j/1000)$ are specified with the score certificates.  All
+endpoint statements below use the exact domain $DG(t/D)\le1$.
+We also use the certified inequalities
+$G(m)\ge c_0m$, $c_0=.3999999$, and $G(0)>1/21$.
+The tail lower bound
+\[
+ G(m)\ge P_0(m):=m-{1\over8(m-1)}\qquad(m>1)
+\]
+follows from the width-one second derivative bound for the arithmetic
+minus geometric mean.  Define $f_{10}(r)=r-(1-e^{-10r})/10$.
+
+\begin{lemma}[Base endpoint]\label{simp:base-endpoint}
+For $\bar\mu=\min(1,1/t)$, replacing $h_0$ by its lower bound $f_{10}$
+in \eqref{simp:credit} gives
+$C(t,D,0;\bar\mu)-\bar\mu t+1+\log\bar\mu\ge0$.
+If $m=t/D\le4$ and $t>1$, each of its two nonconstant HOME candidates
+has margin at least $1/1000$.
+\end{lemma}
+\begin{proof}
+For $t\le1$ nonnegativity is immediate.  For $t>1$ put $m=t/D$ and
+$q=Q/t$.  An individual HOME candidate is
+\[
+ q-\log(Dm)+\psi(\log\max\{1,D[1+v((m(1-q)-\beta)^+)]\}),
+ \quad \psi(r)\in\{3r/5,f_{10}(r)\}.
+\]
+It decreases with $D$ at fixed $m,q$, since $0\le\psi'\le1$.
+The same is true of $\log M(D)-\log(Dm)$.
+
+For each $[a,b]=[j/1000,(j+1)/1000]\subset[0,4]$, set $P=L_j$.
+Monotonicity of $G$ permits the worst larger scale $D=1/P$.
+The two multiplicative-cap tests are precisely
+\[
+ (b-P)(P+9/16)<81/256,\qquad b-P<5/16.
+\]
+If $b\le P$, all such states have $t\le1$.  Otherwise subdivide
+$q\in[0,3/8]$.  On a rational subinterval $[q_-,q_+]$ put
+\[
+ r=\log\max\{1,[1+v((a(1-q_+)-\beta)^+)]/P\}.
+\]
+The exact directed test is
+\begin{equation}\label{simp:home-finite-test}
+ q_--\log(b/P)+\min\{3r/5,f_{10}(r)\}>1/1000.
+\end{equation}
+It bounds both HOME candidates throughout that rectangle.
+The distributed checker exhausts all 4,000 mean intervals and their
+adaptive rational $q$ partitions.  It accepts 13,806 rectangles after
+23,669 visits, with maximum $q$-depth four.  Its smallest lower bound
+in \eqref{simp:home-finite-test} exceeds $0.0010028$.
+This proves the entire finite domain, including $q\le z<3/8$.
+
+For $m\ge4$, use $D=1/P_0(m)$ and put $J=8m(m-1)-1$.
+Then $t=m/P_0=1+1/J\le96/95$, $D\le24/95<\ell$.
+The multiplicative-cap inequalities follow from
+$m-P_0\le1/24<5/16$ and
+$(m-P_0)(P_0+9/16)\le(m+1)/(8(m-1))\le1/4<81/256$.
+All positive HOME pieces are linear:
+$W=\max\{1,t(1-q)+cD\}$.
+For the $f_{10}$ branch, $W\le144/133$ and
+\[
+ {d\over dq}\{q+f_{10}(\log W)-\log t\}
+ \ge1-{96\over95}\left(1-(133/144)^{10}\right)>0
+\]
+on the positive linear piece; its derivative is one on the floor.
+It suffices to check $q=0$.
+There $r=\log W<2/25$ and
+$r\ge c/(m+c)$, so $f_{10}(r)\ge(7/2)r^2$.
+The desired inequality follows from
+\[
+ \frac72\left(\frac7{25}\right)^2[8m(m-1)-1]-(m+2/7)^2>0.
+\]
+After $m=4+x$, the coefficients are
+$94333/12250$, $29728/4375$, and $747/625$, all positive.
+Here $f_{10}(r)\ge5r^2-(50/3)r^3$ and
+$\log t\le1/J$ justify the comparison.
+Throughout this tail $0\le\log W<2/25$, and
+$f_{10}(r)\le5r^2\le(2/5)r\le(3/5)r$.
+Thus the same smooth-branch proof also establishes the linear-HOME
+branch.  This completes the tail.
+\end{proof}
+
+\subsection{A single barrier pays the actual private gap}
+
+Set $R_4=1.00032357$, $P_c=(43/25)\log R_4$ and $b_c=P_c/3$.
+An elementary barrier principle will be used: if a locally absolutely
+continuous function starts nonnegative and has derivative at least $1/3$
+wherever it is below $b_c$, it is at least $\min(s/3,b_c)$.
+To prove this, integrate on the connected components of the open set
+where the function is below $b_c$.  A component with positive left endpoint
+would start at $b_c$ and increase, a contradiction.
+The principle also applies after an initial nondecreasing segment on
+which the function is already at least $b_c$.
+
+\begin{theorem}[Uniform boosted controller]\label{simp:controller}
+On $DG(t/D)\le1$, let $\sigma=-\log(DG(t/D))$ and
+$b=\min(\sigma,P_c)/3$.
+The equation
+\[
+ H(\mu):=C(t,D,0;\mu)-\mu t+1+\log\mu=b
+\]
+has a unique root $r_b\in(0,\bar\mu]$.
+The common controller
+\begin{equation}\label{simp:multiplier}
+ \mu=\max\{r_b,k/\max(1,D)\}
+\end{equation}
+is admissible and satisfies $H(\mu)\ge b$.
+\end{theorem}
+\begin{proof}
+First let $t,D>0$.  Fix $m=t/D$ and parameterize the private-feasible ray
+by $D(s)=e^{-s}/G(m)$, $t(s)=mD(s)$, $s\ge0$; then $s=\sigma$.
+For each fixed $q=Q/t$, put
+$r(s)=\log\max\{1,D(s)[1+v((m(1-q)-\beta)^+)]\}$.
+Where $r>0$, $r'=-1$; on the floor, $r'=0$.
+Every endpoint candidate starts nonnegative by the base lemma.
+
+For the active multiplicative cap let $E(D)=DM'(D)/M(D)$.
+Its rational branch is active only when $x=9D/16\le5/4$, where
+\[
+ E(D)={x^2(x+2)\over(x+1)(x^2+x+1)}<2/3.
+\]
+The inequality reduces to $x^3+2x^2-4x-2<0$; on this interval its
+left side is at most $x/16-2<0$.
+On the linear branch, $E=1-1/M$.
+While $t>1$ and its candidate $\log M-\log t$ is below $b_c$,
+\[
+ M<t e^{b_c}\le{1\over c_0(1-b_c)}<3,
+\]
+Thus its ray derivative $1-E$ exceeds $1/3$ in either active branch.
+When $t\le1$ and $1-t+\log M<b_c$, use
+$E\le2\log M<2b_c$ and $t>1-b_c$ to obtain derivative
+$t-E>1-3b_c>1/3$.
+
+For the $3r/5$ HOME branch, the ray derivative is at least $2/5$ when
+$t>1$.  When $t\le1$ and its value is below $b_c$, it is at least
+$t(1-q)-3/5>2/5-b_c>1/3$.
+
+For the $f_{10}$ HOME branch with $t\le1$, a value below $b_c$ forces
+$f_{10}(r)<b_c$, hence $r<1/100$.  Its derivative is then at least
+$e^{-1/10}-b_c>1/3$.
+If $m\le4$ and the ray starts at $t>1$, its initial value is at least
+$1/1000>b_c$ by the base lemma.  It is nondecreasing until $t=1$,
+because its derivative there is $e^{-10r}$, or one on the floor.
+If $m\ge4$ and $t>1$, use $\log t\le1/95$.
+A subcap value implies $f_{10}(r)<b_c+1/95<f_{10}(3/50)$, so
+its derivative is at least $e^{-3/5}>1/3$.
+All comparisons have strict rational or directed certificates.
+
+Apply the same barrier to these candidates, and then take their minimum.
+Since $h_0\ge f_{10}$, the actual endpoint is at least
+$\min(s/3,b_c)=b$.  The case $t=0$ has endpoint at least one.
+At $D=0$, feasibility gives $t\le1$, the endpoint is $1-t$, and
+when $1-t<b_c$ one has $(-\log t)/3\le(1-t)/(3t)\le1-t$.
+
+The function $H$ tends to $-\infty$ at zero and is strictly increasing
+before $\bar\mu$: $C$ is nondecreasing in $\mu$ and $1/\mu-t>0$.
+This proves root existence and uniqueness.
+Finally $G(m)\ge c_0m$ and private feasibility give $c_0t\le1$.
+Hence $t/\max(1,D)\le1/c_0$, so the clipped floor is admissible
+because $k<c_0$.  No additional unprotected private profile is needed.
+\end{proof}
+
+Since $G(0)>1/21$, feasibility also implies $D<21$.
+Every multiplier above the clipped floor is therefore at least
+$k/21>1/100$, in the range of the finite evaluation rule.
+Evaluate the floor first, and bisect above it only when its credit
+is below the actual target; this never calls that rule below its
+proved range.
+
+For a zero-head comparator the logarithmic tangent gives
+$\mathcal E_0\le-\log\beta-H(\mu)$, and consequently
+\[
+ \mathcal E_0+b\le-\log\beta.
+\]
+The paid target is the actual private gap of the same auxiliary solve.
+
+\begin{lemma}[Exact small-scale tail credit]\label{simp:tail-credit}
+For $t\ge1$, $0\le D\le11/1000$, and $\mu\ge k$,
+\[
+                  C(t,D,0;\mu)=\log M(D).
+\]
+\end{lemma}
+\begin{proof}
+Put $A=81/256$, so $\log M(D)\le AD^2$.
+For a candidate $Q$, if $\mu Q\ge\log M(D)$, its
+nonnegative transfer suffices.  Otherwise
+$Q<AD^2/k$ and
+\[
+ W(t-Q,D)\ge t-Q+cD
+       >1+cD-AD^2/k\ge1+(27/100)D.
+\]
+The last comparison uses $c>7/25$ and
+$7/25-(A/k)(11/1000)>27/100$.
+Let $s_D=\log(1+27D/100)$.  For $D>0$,
+\[
+ {27D/100\over1+297/100000}\le s_D\le27D/100,\qquad
+ f_{10}(s_D)\ge
+ \left(5-\frac{50}{3}\frac{297}{100000}\right)
+ \left({27D/100\over1+297/100000}\right)^2>AD^2.
+\]
+Also $(3/5)s_D>AD^2$.
+Since $h_0\ge f_{10}$, every candidate in the credit minimum
+is at least $\log M(D)$.  The constant-cap candidate $Q=0$
+attains this value.  At $D=0$ both sides are zero.
+\end{proof}
+
+\subsection{The retained price bounds}
+
+For $P=\pi-\phi(\pi,\rho)$ and $K=(7/6)\log R_4$, write
+$\widetilde P=P-\frac12\min(\pi,K)$.
+Let $P_{\rm old}$ use only the first two transfer branches.  Then
+\begin{equation}\label{simp:price-envelope}
+ \widetilde P\ge
+ \max\{0,P_{\rm old}-K/2,(499/1000)g(\pi)\}.
+\end{equation}
+Indeed $P\ge P_{\rm old},g(\pi)$, and for $0<\pi\le K<a_0$,
+$g(\pi)/\pi\ge1-5K$ and $(501/1000)(1-5K)>1/2$.
+For larger prices use monotonicity of $g$.
+As a function of $w=e^\pi$, $g(\log w)$ is increasing and concave;
+extend it by $w-1$ below one when constructing interval supporting planes.
+Both one-sided derivatives at one are one, so the extension remains concave.
+The maximal HOME credit decrease caused by the third branch is
+$b_0-2a_0/5<3/5000$, attained at $\log W=a_0$.
+These are the only localized-price facts needed by the remaining scalar
+and rounding arguments.

@@ -1,0 +1,20 @@
+{
+  "status": "PASS_LEAN_RUNTIME_DATA",
+  "precision_bits": 192,
+  "denominator_power": 48,
+  "log_nodes": 16385,
+  "epsilon_nodes": 20500,
+  "constants": 11,
+  "maximum_endpoint_width": 1,
+  "private_nodes": 4001,
+  "proxies": 5,
+  "planar": 1,
+  "runtime_score_terms": 8,
+  "private_profile_sha256": "5f4577e4e79bccbfbeb947c8790d823a49ee696b9278d69a7b2a9124edf83825",
+  "generator_sha256": "07cf4f90d6e55636d13bba05fb7cc95b4619cc2bdc69fbbcce865d93189f1f9e",
+  "table_sha256": "f7fd6acc9b93fd1700b4f70073bd2eb27031dd5222d28908194d693fa6e7a62e",
+  "input_sha256": "a670829844a507c64548440d18f2b8b9dab87601eda3e92fa8c67d57ffa176dd",
+  "comparisons": {},
+  "seconds": 0.3341134999645874,
+  "scope": "Directed data generation, not a replay of the local score/profile certificates or global cover."
+}

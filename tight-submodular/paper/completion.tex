@@ -1,0 +1,167 @@
+\section{One pointwise completion theorem}
+\label{simp:completion-section}
+
+The completion argument uses only one potential.  Its charge coefficient
+is one, exactly matching the unit of spare column capacity in a cost-two
+NEW label.  No intermediate capacity surcharge is needed.
+
+For a capped factor with parameter $\theta$, and for an attenuated factor
+with parameters $(a,\theta)$, respectively, define
+\[
+ F_{C,\theta}(r)=\max(1,\theta r),\qquad
+ F_{a,\theta}(r)=\max\{1,\theta\max_{s\in\mathbb Z_{\ge0}}a^s(r+s)\}.
+\]
+The fixed parameters obey $\theta a^s(s+1)\le1$ for every integer $s\ge0$.
+Comparing consecutive terms reduces this condition to the single index
+$s=\lfloor a/(1-a)\rfloor$.  The maximum defining $F_{a,\theta}$ is
+finite: the ratio of consecutive nonconstant terms is
+$a(r+s+1)/(r+s)$, eventually below one.  In fact indices above
+$\lceil a/(1-a)\rceil$ can be discarded uniformly for $r\ge0$.
+
+Every $F_c$ is nondecreasing, $F_c(r)/r$ is nonincreasing, and $F_c(r)=1$
+for $0\le r\le1$.  Moreover
+\[
+ aF_{a,\theta}(r+1)\le F_{a,\theta}(r).
+\]
+Set
+\[
+ \mathcal F(r)=\prod_c F_c(r)^{\omega_c},\qquad
+ \chi(\delta)=\log\mathcal F(e^\delta),\qquad
+ \Gamma=\prod_c\theta_c^{\omega_c}.
+\]
+Then $\chi$ is convex, nondecreasing, one-Lipschitz, zero on
+$(-\infty,0]$, and $0\le\chi(\delta)\le\delta^+$.
+Indeed each $\log F_c(e^\delta)$ is a maximum of zero and functions
+$\log(\theta a^s)+\log(e^\delta+s)$, all convex; its slopes lie in $[0,1]$.
+Also $\mathcal F(r)/r\to\Gamma$ as $r\to\infty$.
+
+\begin{lemma}[Unit charge]\label{simp:unit-charge}
+For every real $\delta$,
+\[
+ \min\{\log2,\chi(\delta)\}\le\delta^+-\chi(\delta).
+\]
+\end{lemma}
+\begin{proof}
+Three uses of the attenuation recursion give $F_{a,\theta}(4)\le a^{-3}$.
+For the three capped factors, the respective values at four are $4,1,2$.
+The exact weights in the score table satisfy the two rational inequalities
+\[
+ w:=2\omega_{C,1}+\omega_{C,1/2}<\frac23,
+ \qquad s:=3\sum_{c\text{ attenuated}}\omega_c\frac{1-a_c}{a_c}<\frac16.
+\]
+Since $-\log a\le(1-a)/a$ and $\log2\ge1/2$,
+\[
+ \chi(\log4)\le w\log2+s<\tfrac23\log2+\tfrac16\le\log2.
+\]
+Convexity and $\chi(0)=0$ imply $\chi(\delta)\le\delta/2$ on
+$[0,\log4]$.  Above $\log4$, one-Lipschitzness implies
+$\delta-\chi(\delta)\ge\log4-\chi(\log4)>\log2$.
+For $\delta\le0$ both sides vanish.
+\end{proof}
+
+For $p\ge0$, $\alpha>0$, $\max(X,p)\le V\le X+p$, put $b=\max(p,\alpha)$.
+The ordinary kernel used in the proof is
+\begin{equation}\label{simp:strong-kernel}
+ \widehat K_{p,\alpha}(X,V)=
+ \begin{cases}
+ V\mathcal F(\alpha/V),&V\le b,\\
+ V\mathcal F(\alpha/X)/\mathcal F(\alpha V/(bX)),&V\ge b.
+ \end{cases}
+\end{equation}
+The formulas agree at $V=b$; continuous limits specify zero arguments.
+This kernel is used only in the analysis of the final matching, not as an
+extra option in the auxiliary algorithm.  The private and NEW kernels are
+\[
+ B_\alpha(X)=\prod_c\max(X,\theta_c\alpha)^{\omega_c},
+ \qquad W_p(V)=\min(V,2p).
+\]
+
+\begin{lemma}[Ordinary envelope]\label{simp:ordinary-envelope}
+The original physical kernel $\mathcal H_{p,\alpha}(X,V)$ is at most
+$\widehat K_{p,\alpha}(X,V)$, and
+\[
+ \widehat K_{p,\alpha}(X,V)=
+ \inf_{\substack{u>0,\ u\ge X,\ w\ge1\\uw\ge V}}
+ uw\,\frac{\mathcal F(\alpha/u)}
+ {\mathcal F(w\min(1,\alpha/p))}.
+\]
+At $p=0$, interpret $\min(1,\alpha/p)$ as one.
+\end{lemma}
+\begin{proof}
+To prove the identity put $v=uw$ and $r=\alpha/u$.  The minimized expression
+is $v\mathcal F(r)/\mathcal F((v/b)r)$ with $X\le u\le v$.
+For $v\ge b$, convexity of $\chi$ makes the ratio nonincreasing in $r$,
+so $u=X$ minimizes it.  For $v\le b$, the ratio is nondecreasing in $r$,
+so use $u=v$; then $\mathcal F(\alpha/b)=1$.
+In both cases the resulting expression is nondecreasing in $v$, by
+monotonicity of $\mathcal F(r)/r$.  Its minimum is therefore at $v=V$.
+
+For domination fix a feasible $(u,w)$ and let
+$r=\alpha/u$, $q=w\min(1,\alpha/p)$.  Thus $w\ge\max(1,q)$ and
+\[
+ p/u\le w\min(1,r/q),\qquad V/u\le\min(w,1+rw/q),\qquad X/u\le1.
+\]
+For each factor, monotonicity of $F$ and reverse monotonicity of $F(r)/r$
+bound its singleton, raw, and private-floor entries by $wF(r)/F(q)$.
+For a capped entry, $\min(V,X/\theta)/u\le\min(w,1/\theta)
+\le w/F(q)$.  For an attenuated entry it remains to show
+\[
+ a\min(1,w^{-1}+r/q)F(q)\le F(r).
+\]
+If $q\le1$, use $F(q)=1$.  If $1\le q\le r+1$, use
+$aF(q)\le aF(r+1)\le F(r)$.  If $q>r+1$, use
+$a(r+1)F(q)/q\le aF(r+1)\le F(r)$.
+Take the weighted geometric mean and then the infimum.
+\end{proof}
+
+\begin{theorem}[Common cost-two completion]\label{simp:completion}
+Fix disjoint residual bundles and reservation data
+$p_{ij}\le\alpha_i e^{\rho_j}$, $p_{ii}=\alpha_i e^{\rho_i}>0$, $\rho_j\ge0$.
+Let $Q$ be the maximum utility product after a bijective rematching of the
+reserved items.  Let $a_{ij},z_{ij},b_i,d_i\ge0$ obey
+\[
+ d_i+b_i+\sum_j(a_{ij}+z_{ij})=1,
+ \qquad b_j+\sum_i(a_{ij}+2z_{ij})\le1.
+\]
+With $X_i=f_i(S_i)$ and $V_{ij}=f_i(S_i+j)$,
+\[
+ Q\ge
+ \prod_{ij}\widehat K_{ij}^{a_{ij}}
+ \prod_{ij}W_{ij}^{z_{ij}}
+ \prod_iV_{ii}^{b_i}\prod_iB_{\alpha_i}(X_i)^{d_i}.
+\]
+Zero exponent factors are omitted; zero supported factors make the assertion
+immediate.  The theorem includes any mixture of OLD, NEW, full HOME, and
+private factors on the same residual outcome.
+\end{theorem}
+\begin{proof}
+Normalize an optimal dual of the actual final perfect matching as
+$u_i>0$, $\pi_j\ge0$, $\min_j\pi_j=0$, so $u_i\ge X_i$ and
+$Q=\prod_i u_i\prod_j e^{\pi_j}$.
+Write $r_i=\alpha_i/u_i$, $\delta_i=\log r_i$, and $\chi_i=\chi(\delta_i)$.
+The HOME and reservation inequalities imply
+$r_j\le e^{\pi_j-\rho_j}\le e^{\pi_j}\min(1,\alpha_i/p_{ij})$.
+The envelope lemma therefore gives
+\[
+ \log(\widehat K_{ij}/u_i)\le\pi_j+\chi_i-\chi_j,
+ \qquad \log(B_{\alpha_i}(X_i)/u_i)\le\chi_i.
+\]
+The full HOME value satisfies $\log(V_{ii}/u_i)\le\pi_i$ directly.
+The singleton and union bounds give
+\[
+ \log(W_{ij}/u_i)\le
+ \pi_j-(\delta_j-\delta_i-\log2)^+.
+\]
+Let $c_j=b_j+\sum_i(a_{ij}+z_{ij})$.  Subtracting $\log Q$ from the proposed
+log product yields an upper bound
+\[
+ -\sum_j(1-c_j)(\pi_j-\chi_j)
+ +\sum_{ij}z_{ij}
+ [\chi_j-\chi_i-(\delta_j-\delta_i-\log2)^+].
+\]
+Every bracket is at most $\min(\log2,\chi_j)$, using nonnegativity and
+one-Lipschitzness of $\chi$.  The unit-charge lemma and $r_j\le e^{\pi_j}$
+bound it by $\delta_j^+-\chi_j\le\pi_j-\chi_j$.
+Finally $1-c_j\ge\sum_i z_{ij}$ by the cost-two column constraint, so the
+entire expression is nonpositive.
+\end{proof}

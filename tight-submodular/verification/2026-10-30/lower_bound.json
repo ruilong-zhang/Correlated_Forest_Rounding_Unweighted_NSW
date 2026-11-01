@@ -1,0 +1,21 @@
+{
+  "status": "PASS_SIMPLIFIED_RATIONAL_FRAMEWORK_LOWER_BOUND",
+  "check_count": 12,
+  "checks": {
+    "cardinality_increment_identity": true,
+    "cardinality_DR_identity": true,
+    "q_at_zero": true,
+    "q_at_m": true,
+    "minimum_increment": true,
+    "strict_rounded_increment": true,
+    "strict_rounded_DR": true,
+    "forced_H_singleton_gap": true,
+    "masking_exponent_survives_queries": true,
+    "smoothing_C_dominates_error": true,
+    "population_exponents": true,
+    "four_reserved_items_per_A": true
+  },
+  "proof_sha256": "ec343dcaae18fc4711fe532969de5d50e4049285776a38eff624d373e4b61cca",
+  "baseline_dependencies": [],
+  "scope": "Universal formal polynomial identities and exact margins; complete smoothing, reference embedding, masking, and quantifiers are in the TeX."
+}

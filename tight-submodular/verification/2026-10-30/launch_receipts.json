@@ -1,0 +1,134 @@
+[
+  {
+    "command": [
+      "<REPLAY_ROOT>/verify_B",
+      "<REPLAY_ROOT>/data/tables48.txt",
+      "<REPLAY_ROOT>/data/input48.txt",
+      "1",
+      "30000000",
+      "0",
+      "2.500000626",
+      "0",
+      "21",
+      "128"
+    ],
+    "exit_code": 0,
+    "finished_utc": "2026-10-29T18:46:50.395416+00:00",
+    "freshly_executed": true,
+    "h": 1,
+    "log_sha256": "45986385d25e6a57008c34a233aaade390438cbf43b3dd5fe290f090a389b279",
+    "postrun_sha256": {
+      "<SOURCE_ROOT>/certificate/verify_B_simple.cpp": "aec3837ba89a0a3d49f798cc91a014e724a33a883283e91351163068deec7df8",
+      "<REPLAY_ROOT>/data/input48.txt": "a670829844a507c64548440d18f2b8b9dab87601eda3e92fa8c67d57ffa176dd",
+      "<REPLAY_ROOT>/data/tables48.txt": "f7fd6acc9b93fd1700b4f70073bd2eb27031dd5222d28908194d693fa6e7a62e",
+      "<REPLAY_ROOT>/verify_B": "2b8505a7ea77910fdfddbf23051aa8a8457d1229684a85af12b880278a753f75"
+    },
+    "prelaunch_sha256": {
+      "<SOURCE_ROOT>/certificate/verify_B_simple.cpp": "aec3837ba89a0a3d49f798cc91a014e724a33a883283e91351163068deec7df8",
+      "<REPLAY_ROOT>/data/input48.txt": "a670829844a507c64548440d18f2b8b9dab87601eda3e92fa8c67d57ffa176dd",
+      "<REPLAY_ROOT>/data/tables48.txt": "f7fd6acc9b93fd1700b4f70073bd2eb27031dd5222d28908194d693fa6e7a62e",
+      "<REPLAY_ROOT>/verify_B": "2b8505a7ea77910fdfddbf23051aa8a8457d1229684a85af12b880278a753f75"
+    },
+    "started_utc": "2026-10-29T18:46:23.378485+00:00",
+    "status": "COMPLETE"
+  },
+  {
+    "command": [
+      "<REPLAY_ROOT>/verify_B",
+      "<REPLAY_ROOT>/data/tables48.txt",
+      "<REPLAY_ROOT>/data/input48.txt",
+      "2",
+      "30000000",
+      "0",
+      "2.500000626",
+      "0",
+      "21",
+      "32"
+    ],
+    "exit_code": 0,
+    "finished_utc": "2026-10-29T18:48:11.277685+00:00",
+    "freshly_executed": true,
+    "h": 2,
+    "log_sha256": "b29d31462ec5a171eb56681fd01ce39b527afc8e840349b7b16db0ef86730c31",
+    "postrun_sha256": {
+      "<SOURCE_ROOT>/certificate/verify_B_simple.cpp": "aec3837ba89a0a3d49f798cc91a014e724a33a883283e91351163068deec7df8",
+      "<REPLAY_ROOT>/data/input48.txt": "a670829844a507c64548440d18f2b8b9dab87601eda3e92fa8c67d57ffa176dd",
+      "<REPLAY_ROOT>/data/tables48.txt": "f7fd6acc9b93fd1700b4f70073bd2eb27031dd5222d28908194d693fa6e7a62e",
+      "<REPLAY_ROOT>/verify_B": "2b8505a7ea77910fdfddbf23051aa8a8457d1229684a85af12b880278a753f75"
+    },
+    "prelaunch_sha256": {
+      "<SOURCE_ROOT>/certificate/verify_B_simple.cpp": "aec3837ba89a0a3d49f798cc91a014e724a33a883283e91351163068deec7df8",
+      "<REPLAY_ROOT>/data/input48.txt": "a670829844a507c64548440d18f2b8b9dab87601eda3e92fa8c67d57ffa176dd",
+      "<REPLAY_ROOT>/data/tables48.txt": "f7fd6acc9b93fd1700b4f70073bd2eb27031dd5222d28908194d693fa6e7a62e",
+      "<REPLAY_ROOT>/verify_B": "2b8505a7ea77910fdfddbf23051aa8a8457d1229684a85af12b880278a753f75"
+    },
+    "started_utc": "2026-10-29T18:46:23.378524+00:00",
+    "status": "COMPLETE"
+  },
+  {
+    "command": [
+      "<REPLAY_ROOT>/verify_B",
+      "<REPLAY_ROOT>/data/tables48.txt",
+      "<REPLAY_ROOT>/data/input48.txt",
+      "3",
+      "30000000",
+      "0",
+      "2.500000626",
+      "0",
+      "21",
+      "6"
+    ],
+    "exit_code": 0,
+    "finished_utc": "2026-10-29T18:48:43.336105+00:00",
+    "freshly_executed": true,
+    "h": 3,
+    "log_sha256": "e86df4180c6e2a4bf6c95e064570af54c151830bf985f8a8c51089ccde52f0c8",
+    "postrun_sha256": {
+      "<SOURCE_ROOT>/certificate/verify_B_simple.cpp": "aec3837ba89a0a3d49f798cc91a014e724a33a883283e91351163068deec7df8",
+      "<REPLAY_ROOT>/data/input48.txt": "a670829844a507c64548440d18f2b8b9dab87601eda3e92fa8c67d57ffa176dd",
+      "<REPLAY_ROOT>/data/tables48.txt": "f7fd6acc9b93fd1700b4f70073bd2eb27031dd5222d28908194d693fa6e7a62e",
+      "<REPLAY_ROOT>/verify_B": "2b8505a7ea77910fdfddbf23051aa8a8457d1229684a85af12b880278a753f75"
+    },
+    "prelaunch_sha256": {
+      "<SOURCE_ROOT>/certificate/verify_B_simple.cpp": "aec3837ba89a0a3d49f798cc91a014e724a33a883283e91351163068deec7df8",
+      "<REPLAY_ROOT>/data/input48.txt": "a670829844a507c64548440d18f2b8b9dab87601eda3e92fa8c67d57ffa176dd",
+      "<REPLAY_ROOT>/data/tables48.txt": "f7fd6acc9b93fd1700b4f70073bd2eb27031dd5222d28908194d693fa6e7a62e",
+      "<REPLAY_ROOT>/verify_B": "2b8505a7ea77910fdfddbf23051aa8a8457d1229684a85af12b880278a753f75"
+    },
+    "started_utc": "2026-10-29T18:46:50.396494+00:00",
+    "status": "COMPLETE"
+  },
+  {
+    "command": [
+      "<REPLAY_ROOT>/verify_B",
+      "<REPLAY_ROOT>/data/tables48.txt",
+      "<REPLAY_ROOT>/data/input48.txt",
+      "4",
+      "30000000",
+      "0",
+      "2.500000626",
+      "0",
+      "21",
+      "2"
+    ],
+    "exit_code": 0,
+    "finished_utc": "2026-10-29T18:48:50.051069+00:00",
+    "freshly_executed": true,
+    "h": 4,
+    "log_sha256": "af5082a06f47a8982d61c55f046892468486ae35a23a3776aa6fc590f418aa67",
+    "postrun_sha256": {
+      "<SOURCE_ROOT>/certificate/verify_B_simple.cpp": "aec3837ba89a0a3d49f798cc91a014e724a33a883283e91351163068deec7df8",
+      "<REPLAY_ROOT>/data/input48.txt": "a670829844a507c64548440d18f2b8b9dab87601eda3e92fa8c67d57ffa176dd",
+      "<REPLAY_ROOT>/data/tables48.txt": "f7fd6acc9b93fd1700b4f70073bd2eb27031dd5222d28908194d693fa6e7a62e",
+      "<REPLAY_ROOT>/verify_B": "2b8505a7ea77910fdfddbf23051aa8a8457d1229684a85af12b880278a753f75"
+    },
+    "prelaunch_sha256": {
+      "<SOURCE_ROOT>/certificate/verify_B_simple.cpp": "aec3837ba89a0a3d49f798cc91a014e724a33a883283e91351163068deec7df8",
+      "<REPLAY_ROOT>/data/input48.txt": "a670829844a507c64548440d18f2b8b9dab87601eda3e92fa8c67d57ffa176dd",
+      "<REPLAY_ROOT>/data/tables48.txt": "f7fd6acc9b93fd1700b4f70073bd2eb27031dd5222d28908194d693fa6e7a62e",
+      "<REPLAY_ROOT>/verify_B": "2b8505a7ea77910fdfddbf23051aa8a8457d1229684a85af12b880278a753f75"
+    },
+    "started_utc": "2026-10-29T18:48:11.278912+00:00",
+    "status": "COMPLETE"
+  }
+]

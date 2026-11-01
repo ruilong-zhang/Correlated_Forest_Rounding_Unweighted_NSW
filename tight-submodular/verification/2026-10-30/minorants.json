@@ -1,0 +1,104 @@
+{
+  "status": "PASS_COMPLETION_AND_MINORANTS",
+  "checks": 51,
+  "gates": {
+    "weighted_protection_floor": true,
+    "attenuation_0": true,
+    "attenuation_1": true,
+    "attenuation_2": true,
+    "attenuation_3": true,
+    "attenuation_4": true,
+    "unit_charge_w": true,
+    "unit_charge_s": true,
+    "low_exact_endpoint_count": true,
+    "low_endpoint_0": true,
+    "low_endpoint_1": true,
+    "low_endpoint_2": true,
+    "low_endpoint_3": true,
+    "low_endpoint_4": true,
+    "low_endpoint_5": true,
+    "low_endpoint_6": true,
+    "low_endpoint_7": true,
+    "low_endpoint_8": true,
+    "low_endpoint_9": true,
+    "low_endpoint_10": true,
+    "low_endpoint_11": true,
+    "quartic_cap": true,
+    "quartic_positive_quadratic": true,
+    "low_curvature_395494177/1000000000": true,
+    "derivative_bracket_395494177/1000000000": true,
+    "low_stationary_395494177/1000000000": true,
+    "wide_curvature_395494177/1000000000": true,
+    "wide_derivative_395494177/1000000000": true,
+    "low_curvature_2/5": true,
+    "derivative_bracket_2/5": true,
+    "low_stationary_2/5": true,
+    "wide_curvature_2/5": true,
+    "wide_derivative_2/5": true,
+    "high_cover_count": true,
+    "high_tail": true,
+    "high_marginal_domain": true,
+    "high_cap": true,
+    "high_decreasing": true,
+    "high_expected_surplus": true,
+    "NEW_polynomial": true,
+    "NEW_tail": true,
+    "NEW_moment_coefficient": true,
+    "private_inactive": true,
+    "HOME_inactive": true,
+    "raw09_inactive": true,
+    "raw10_inactive": true,
+    "joint_inactive": true,
+    "point4_enabled": true,
+    "half_difference_increasing": true,
+    "half_dominated": true,
+    "final_head_bounds": true
+  },
+  "margins": {
+    "low_endpoint_0": "[0.0002384627464420000000000000000000000000000000000000000000000000000000000000000 +/- 3.05e-81]",
+    "low_endpoint_1": "[4.105978136200000000000000000000000000000000000000000000000000000000000000000e-5 +/- 7.59e-82]",
+    "low_endpoint_2": "[0.00011931062082930366549804915813097278478005834959906248955202829129278854676 +/- 7.17e-78]",
+    "low_endpoint_3": "[1.20093082246007400137966829763261159774486059361200686411597934e-15 +/- 6.79e-78]",
+    "low_endpoint_4": "[4.06965061056713772311842893870626840064412547614576319595462528e-14 +/- 5.75e-77]",
+    "low_endpoint_5": "[8.09441543357411431333902350014527502152753903439592020345665166966865e-8 +/- 1.21e-77]",
+    "low_endpoint_6": "[4.774553900094889066724507605766160409135405314939186790462906635264225e-7 +/- 2.28e-77]",
+    "low_endpoint_7": "[5.540216006500191700363245135310732978181066027297569312621449787168368e-7 +/- 6.33e-77]",
+    "low_endpoint_8": "[9.153583353960433716967615241976945563705213816273797865728896997573213e-7 +/- 2.07e-77]",
+    "low_endpoint_9": "[0.1538399029765431196670797331447557129440863000140750727604461052775980236669 +/- 8.91e-77]",
+    "low_endpoint_10": "[0.124871561918701319795878738401314933612927184901999679776044774200610363211 +/- 2.64e-76]",
+    "low_endpoint_11": "[0.002991767228860398546398019260986493801135694301569086534558554044692459106 +/- 5.29e-76]",
+    "low_stationary_395494177/1000000000": "[9.24900558322657242243567348455625880337040103986058893845730747548905e-8 +/- 3.76e-77]",
+    "low_stationary_2/5": "[2.8398941281050884725033008018319563427332071727139935156016338117047e-9 +/- 4.15e-77]",
+    "high_tail": "[0.0520812319509191180599871886745459641592238508818309075562530616851036791644 +/- 7.95e-77]",
+    "NEW_tail": "[0.0181471805599453094172321214581765680755001343602552541206800094933936219697 +/- 1.22e-77]"
+  },
+  "unit_charge": {
+    "w": "151950172257/250000000000",
+    "s": "131990823912011/1332000000000000"
+  },
+  "affine_minima": [
+    {
+      "k": "395494177/1000000000",
+      "bracket": [
+        "55177060099289356212678940605/12518049677253765339779944153088",
+        "13794265024822339053169735155/3129512419313441334944986038272"
+      ],
+      "lower": "[9.24900558322657242243567348455625880337040103986058893845730747548905e-8 +/- 3.76e-77]"
+    },
+    {
+      "k": "2/5",
+      "bracket": [
+        "411793951909340390502928645875/12518049677253765339779944153088",
+        "205896975954670195251464322945/6259024838626882669889972076544"
+      ],
+      "lower": "[2.8398941281050884725033008018319563427332071727139935156016338117047e-9 +/- 4.15e-77]"
+    }
+  ],
+  "high_cover": {
+    "intervals": 467,
+    "minimum_gap": "0.00298173351884989427056681708868",
+    "expected_surplus": "678030109/252528518400"
+  },
+  "parameters_sha256": "136062e5c84977f574dc804f5451965ca5d40a58164884ca58734b8c0038b5a1",
+  "seconds": 0.1706415000371635
+}

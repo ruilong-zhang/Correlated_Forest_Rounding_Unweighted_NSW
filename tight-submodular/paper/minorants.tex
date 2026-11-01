@@ -1,0 +1,168 @@
+\section{Two compatible log minorants}\label{simp:minorants}
+
+Every row in the repair class will satisfy $F/u\le.12$,
+$\alpha/u\le1.05068$. We prove a slightly wider interface,
+\begin{equation}\label{simp:wide-domain}
+                       F/u\le1/5,\qquad\alpha/u\le6/5,
+\end{equation}
+which also absorbs finite evaluation errors. Throughout,
+$g_j(S)=f(S+h_j)-p_j$ and $d_j=\mathbb Eg_j(R)$.
+A positive combination of the minorants below stores only one submodular
+function, even when it refers to two different heads.
+
+\subsection{The moment inequality}
+
+If $Y=g(R)$ for normalized monotone submodular $g$ with marginals at most
+$a$, and $d=\mathbb EY$, then for every increasing $h$,
+\begin{equation}\label{eq:new-active-factorial-base}
+ \mathbb E[Yh(Y)]\le d\,\mathbb E[h(Y+a)],\qquad
+ \mathbb E\prod_{r=0}^{s-1}(Y-ra)^+\le d^s\quad(s\ge1).
+\end{equation}
+To see this, fix an item order and telescope
+$Y=\sum_j B_j\Delta_j(R_{<j})$. Each $\Delta_j$ is nonnegative and
+decreasing. Conditional on $B_j=1$, $Y\le g(R_{-j})+a$.
+A decreasing and an increasing function on a product space have
+nonpositive covariance: induct on coordinates using the two-point
+covariance $p(1-p)(u(1)-u(0))(v(1)-v(0))\le0$.
+Consequently
+\[
+ \mathbb E[Yh(Y)]\le\sum_jp_j\mathbb E\Delta_j\,
+                \mathbb Eh(g(R_{-j})+a)
+ \le d\,\mathbb Eh(Y+a).
+\]
+Apply this to $h(y)=\prod_{r=1}^{s-1}(y-ra)^+$ and induct.
+In particular $\mathbb EY^2\le d^2+ad$.
+
+We shall use one fourth-moment truncation. For $x\ge7/2$,
+\begin{equation}\label{eq:new-active-quartic-tail}
+ x-7/2\le x(x-1)(x-2)(x-3)/47.
+\end{equation}
+With $v=x-4\ge-1/2$ the difference polynomial is
+$v^4+10v^3+35v^2+3v+1/2$. It is positive for $v\ge0$; on
+$[-1/2,0]$ it is at least $30v^2+3v+1/2\ge17/40$.
+Thus for marginal bound $a\le Ap$ and $m=d/p$,
+\begin{equation}\label{simp:truncated-moment}
+ \mathbb E\min(Y/p,7A/2)\ge m-m^4/(47A^3).
+\end{equation}
+
+\subsection{Only two ordinary branches can be active on the repair rows}
+
+By the deterministic private law and weighted AM--GM,
+$T_0\le F+\alpha\sum_c\omega_c\theta_c<F+.37\alpha$.
+On \eqref{simp:wide-domain} this is less than $.644u$, so private
+mass is zero. The clipped HOME score is its singleton whenever supported,
+since $F/\beta<2F<u$.
+For a genuinely nonconstant supported affine
+$T\le(p+kF)/R$, $T>p$ and $T\ge u$ imply $t>(R-1)/k$.
+The two mixed-raw affine thresholds are $.2121441$ and $.23726325$,
+both above $1/5$. The joint bound $T\le d_sp+b_sF$ similarly forces
+$t>(1-d_s)/b_s>.28>1/5$. These programs cannot be nonconstant and supported.
+
+The three remaining contraction slopes are at most $1/2$, whence
+$p/u\ge.9$, $F/p\le2/9$, and $\alpha/p\le4/3<4$.
+Clearing denominators proves
+$(1+.5m)/1.02631852<(1+.4m)/1.00032357$ on $0\le m\le2/9$:
+the difference is linear and has the required sign at its larger endpoint.
+Therefore every nonconstant supported ordinary label is one of
+\begin{equation}\label{simp:weak-affines}
+ T_1=(p+.395494177d)/1.00024010,
+ \qquad T_2=(p+.4d)/1.00032357.
+\end{equation}
+Their slopes are at most $2/5$, which improves the domain to
+$p/u\ge23/25$, $d/p\le F/p\le5/23$, and $\alpha/p\le30/23$.
+Singleton ties can use the constant singleton certificate.
+
+\subsection{Ordinary minorants at low and high protection scales}
+
+Write $\widehat K$ for \eqref{simp:strong-kernel} and put
+$\kappa=.394805930160$, $e_0=.000238462746442$, $A_0=38/35$.
+When $\alpha/p\le A_0$, use
+\begin{equation}\label{eq:new-active-physical-minorant}
+ \log\widehat K_{p,\alpha}(X,p+Y)
+ \ge\log p+\kappa\min(Y/p,19/5)-e_0.
+\end{equation}
+Indeed decrease $X$ to $Y$ and protection to zero in $\mathcal H$.
+For $K_0(y)=\mathcal H_{1,0}(y,1+y)$, partition at the rational
+factor ties: capped breakpoints $\theta,\theta/(1-\theta)$ and
+attenuated breakpoints $a^{-1}-1,a/(1-a)$, omitting infinite values.
+On each interval $\log K_0(y)-\kappa y+e_0$ is concave.
+Its 12 relevant endpoint comparisons up to $19/5$ have directed
+margin greater than $1.2009\cdot10^{-15}$. Monotonicity handles the tail.
+The envelope lemma then proves \eqref{eq:new-active-physical-minorant}.
+
+By \eqref{simp:truncated-moment}, its expected excess over either score
+in \eqref{simp:weak-affines} is at least
+\[
+ f(m)=\kappa[m-m^4/(47A_0^3)]-e_0-\log(1+km)+\log R.
+\]
+On $[0,15/158]$, an exact lower bound $f''>7/50$, rational bisection of
+the sole possible derivative zero, and a directed value enclosure there
+prove margins respectively greater than $9.2490055\cdot10^{-8}$ and
+$2.8398941\cdot10^{-9}$. On the full $[0,5/23]$, rational arithmetic gives
+\[
+ f''\ge\frac{k^2}{(1+5k/23)^2}
+       -\frac{12\kappa(5/23)^2}{47A_0^3}>1/10,
+ \qquad f'(15/158)>0.
+\]
+The positive margin therefore extends to the whole needed domain.
+
+For $\alpha/p\ge A_0$, use the simpler high-scale minorant
+\begin{equation}\label{eq:wide-old-high-scale-minorant}
+ \log\widehat K_{p,\alpha}(X,p+Y)
+ \ge\log p+1/100+(7/20)\min(Y/p,14/3).
+\end{equation}
+Convexity of $\chi$ and monotonicity of $\mathcal F(r)/r$ imply that
+$\widehat K$ increases with $X,V$, and with $\alpha$ when $\alpha\ge p$.
+Set $p=1$, $X=Y=y$, and $\alpha=A_0$ to obtain
+\[
+ \log K_0(y)=\begin{cases}
+ \log(1+y)+\chi(\log(A_0/(1+y))),&1+y\le A_0,\\
+ \log(1+y)+\chi(\log(A_0/y))-\chi(\log((1+y)/y)),&1+y\ge A_0.
+ \end{cases}
+\]
+This is nondecreasing. Partition $[0,14/3]$ into 467 rational intervals
+of width at most $.01$. For each $[a,b]$, directed logarithms of exact
+rational factor maxima give
+$\log K_0(a)-1/100-(7/20)b>1/400$.
+These are whole-interval inequalities by monotonicity; the last endpoint
+also covers the entire tail. This proves \eqref{eq:wide-old-high-scale-minorant}.
+Using \eqref{simp:truncated-moment} with $A=4/3$, the expected excess
+is at least
+\[
+ q(m)=1/100+(7/20)[m-m^4/(3008/27)]-\log(1+(2/5)m).
+\]
+It decreases on $[0,5/23]$ because $(7/20)(1+2/23)<2/5$.
+The upper bound $\log(1+x)\le x-x^2/2+x^3/3$ at $x=2/23$ gives
+$q(5/23)\ge678030109/252528518400>1/500$.
+Thus both ordinary minorants reach their selected scores.
+
+\subsection{The NEW minorant and the common stored function}
+
+For all $y\ge0$,
+\[
+ \log\min(1+y,2)\ge(9/10)y-(3/10)y^2.
+\]
+On $[0,1]$ the derivative difference has positive numerator
+$1/10-3y/10+3y^2/5$; beyond one the quadratic is at most
+$27/40<\log2$. The second-moment bound gives
+\[
+ \mathbb E\log\min(1+g_j(R)/p_j,2)
+ \ge\frac{d_j}{p_j}\left[\frac9{10}-\frac3{10}\frac{\alpha+d_j}{p_j}\right]
+ \ge\frac25\frac{d_j}{p_j}
+ \ge\log\left(1+\frac25\frac{d_j}{p_j}\right)
+\]
+whenever $\alpha+F\le5p_j/3$. The left side is the mean of a
+nonnegative monotone submodular function. Together with the constant
+$\log p_j$, it is a pointwise minorant for the NEW payoff
+$\log\min(f(S+h_j),2p_j)$.
+
+Every supported ordinary label in the repair rectangle has one of the
+preceding ordinary minorants or is constant. Every retained NEW candidate
+has the capped-log minorant. Add their variable parts with the selected
+row weights and retain their constant offsets. Positive sums, positive
+scalings, and truncation preserve monotone submodularity; the resulting
+single function has mean at least the weighted logarithmic score and is
+pointwise at most the weighted payoff. Its variable range is at most two,
+since the respective summand ranges are $\kappa(19/5)$, $(7/20)(14/3)$,
+and $\log2$, and row weights sum to one. This establishes the local
+interface required by the one-flow repair theorem.

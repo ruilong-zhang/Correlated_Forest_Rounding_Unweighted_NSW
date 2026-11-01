@@ -1,0 +1,238 @@
+\section{A rational-oracle lower bound for the framework}
+\label{simp:lower-bound}
+
+The benchmark in this section is unrestricted Nash social welfare.
+The algorithm must first select $n$ reserved items $H$ by a
+maximum-product singleton matching and must finally give exactly
+one item of $H$ to every agent.  It may otherwise coordinate the
+residual allocation and final matching arbitrarily.
+
+\begin{theorem}\label{thm:simp-framework-lower-bound}
+Let $R_\star=4^{1/4}(1-e^{-1})^{-3/4}$.  For every fixed
+$0<\varepsilon<R_\star-1$, there are constants $n_0,c>0$ and,
+on arbitrarily large item sets of size $m$, distributions of
+normalized, nonnegative, monotone submodular valuations such that:
+the number of unweighted agents is $n_0$; all answers are rational
+with $O_\varepsilon(\log m)$ bits; every maximum-product singleton
+matching selects the same specified set $H$; and any adaptive
+randomized algorithm using at most $\exp(cm)$ queries and always
+returning one reserved item per agent fails to attain factor
+$R_\star-\varepsilon$ with probability tending to one.
+\end{theorem}
+
+\subsection{A smooth pair with exact agreement near the diagonal}
+
+Fix $k\ge2$, let $\rho_k=1-(1-1/k)^k$, and, for
+$x\in[0,1]^k$, write
+\[
+ \bar x=\frac1k\sum_jx_j,\quad
+ F(x)=1-\prod_j(1-x_j),\quad G(x)=1-(1-\bar x)^k.
+\]
+Both functions are increasing and have nonpositive second partials,
+including diagonal partials.  Arithmetic--geometric mean gives $F\ge G$.
+We construct increasing continuous diminishing-returns functions
+$f,g$ with, for any prescribed $\zeta>0$,
+\begin{equation}\label{simp:masked-properties}
+ \begin{gathered}
+ f(0)=g(0)=0,\qquad 0\le\partial_jf,\partial_jg\le1+C,
+ \qquad C<\zeta,\qquad f(e_j)\ge1-\zeta,\\
+ \max_{p,q}|x_p-x_q|\le\eta
+       \ \Longrightarrow\ f(x)=g(x)=(1+C)G(x)
+ \end{gathered}
+\end{equation}
+for some fixed $\eta>0$.
+
+Here is the full smoothing argument.  Put $y_j=1-x_j$,
+$t=k^{-1}\sum_j y_j$, $h=F-G=t^k-\prod_jy_j$, and
+$d=\max_{p,q}|y_p-y_q|$.  When $t>0$,
+\begin{equation}\label{simp:smoothing-bounds}
+ h\ge\frac{d^2t^{k-2}}{8k^2},\qquad
+ |\partial_jh|\le k^{k-1}dt^{k-2},\qquad
+ \frac{|\partial_jh\,\partial_lh|}{h}
+                 \le8k^{2k}t^{k-2}\quad(h>0).
+\end{equation}
+To verify the first bound, set $w_j=y_j/t$ and
+$V=\sum_j(w_j-1)^2$.  Since $0\le w_j\le k$ and
+$\sum_jw_j=k$, the inequality
+$\log w\le w-1-(w-1)^2/(2k^2)$ gives
+$\prod_jy_j\le t^k e^{-V/(2k^2)}$.
+Here $V\le k(k-1)$ and $V\ge d^2/(2t^2)$; apply
+$1-e^{-u}\ge u/2$ for $0\le u\le1/2$.
+The product-difference identity gives the second bound, since
+$|y_j-t|\le d$ and all product factors are at most $kt$.
+The third follows from the first two.  Zero factors follow by limits.
+
+Choose $0<a<1$, put $b=\sqrt a$ and $\lambda=2/\log(1/a)$,
+and let $\varphi(u)=\int_0^u\psi(v)\,dv$, where
+\[
+ \psi(v)=
+ \begin{cases}
+ 1,&0\le v\le a,\\
+ 1-\lambda\log(v/a),&a<v<b,\\
+ 0,&v\ge b.
+ \end{cases}
+\]
+Thus $0\le\varphi'\le1$, $0\le\varphi(u)\le\min(u,b)$,
+and $\varphi''=-\lambda/u$ on $(a,b)$ and zero elsewhere.
+Define
+\[
+ C=\frac{16\lambda k^{2k+1}}{k-1},\qquad
+ f=F-\varphi(h)+CG,\qquad g=(1+C)G.
+\]
+Nonnegativity follows from $F-\varphi(h)\ge G$.
+Also
+\[
+ \partial_jf=(1-\varphi'(h))\partial_jF
+                   +(\varphi'(h)+C)\partial_jG,
+\]
+which gives the first derivative bounds.  Wherever second
+derivatives exist,
+\[
+ \partial_{jl}f=(1-\varphi')\partial_{jl}F
+    +\varphi'\partial_{jl}G
+    -\varphi''\partial_jh\,\partial_lh+C\partial_{jl}G.
+\]
+The first two terms are nonpositive.  By
+\eqref{simp:smoothing-bounds}, the third is at most
+$8\lambda k^{2k}t^{k-2}$, whereas
+$C\partial_{jl}G=-16\lambda k^{2k}t^{k-2}$.
+Hence all second partials are nonpositive.  The functions are
+$C^1$ and piecewise $C^2$, so this proves diminishing returns,
+including across the joins.  Since $h=0$ on the diagonal,
+uniform continuity gives $\eta>0$ with $d\le\eta$ implying
+$h\le a$; there $\varphi(h)=h$.
+Finally $f(e_j)\ge1-b$, and taking $a$ small ensures
+$b,C<\zeta$.  This proves \eqref{simp:masked-properties}.
+Concavity of $G$ in $\bar x$ also gives
+\begin{equation}\label{simp:reference-sum}
+ \sum_{i=1}^k g(x^i)\le k(1+C)\rho_k
+ \quad\hbox{if}\quad \sum_i x^i_j\le1\quad(j=1,\ldots,k).
+\end{equation}
+
+\subsection{The construction, with rational values from the start}
+
+Take $k$ divisible by three, $n=4k/3$, and $n$ reserved items $H$.
+There are $k/3$ type-A agents, of value $|S\cap H|$, and $k$
+type-B agents.  A further $ks$ items $M$ are uniformly secretly
+equipartitioned into $X_1,\ldots,X_k$, each of size $s$.
+Let $m=n+ks$, $\delta=s^{-1/2}$, and
+$x_j(T)=|T\cap X_j|/s$.
+For $v=f$ (the planted instance) or $v=g$ (the reference instance),
+define the common type-B valuation using a fixed rational $0<\tau\le1$:
+\begin{equation}\label{simp:rational-B}
+ \begin{gathered}
+ w_v(S)=\min\{1,\delta|S\cap H|+v(x(S\cap M))\},\qquad
+ q_m(r)=\frac{2mr-r^2}{m^2},\quad \Delta=\frac{\tau}{10m^2},\\
+ \widehat w_v(S)=\Delta\left\lfloor
+           \frac{w_v(S)+\tau q_m(|S|)}{\Delta}\right\rfloor.
+ \end{gathered}
+\end{equation}
+Continuous diminishing returns makes $v(x(T))$ submodular.
+Adding the disjoint modular term preserves that property, as does
+truncation: for a monotone submodular function $u$, the marginal of
+$\min(1,u)$ is $\min\{u(S+e)-u(S),(1-u(S))^+\}$.
+Thus $w_v$ is normalized, monotone, submodular, and at most one.
+
+The floor operation also preserves these properties here, with
+strict margins.  The minimum cardinality increment of $q_m$ is
+$1/m^2$, and its elementary two-element submodular difference is
+$2/m^2$.  Write $\widehat w_v=w_v+\tau q_m-e_S$, where
+$0\le e_S<\Delta$.  Every rounded increment is at least
+$\tau/m^2-\Delta>0$; every elementary submodular difference is at
+least $2\tau/m^2-2\Delta>0$.  These elementary inequalities imply
+all diminishing-returns inequalities by telescoping.  Moreover
+\begin{equation}\label{simp:rational-error}
+ w_v(S)-\Delta<\widehat w_v(S)
+             \le w_v(S)+\tau\le1+\tau.
+\end{equation}
+Normalization is exact.  If $\tau=a'/b'$ in lowest terms, each
+answer is $Ja'/(10b'm^2)$ with $Ja'\le10(a'+b')m^2$,
+so its bit length is $O(\log m+\operatorname{bits}(\tau))$.
+Type-A answers remain integers.
+
+Every first singleton matching must select exactly $H$ for large $s$.
+A type-A agent values its singletons in $H$ at one and all others
+at zero.  For type B, the derivative bound in
+\eqref{simp:masked-properties} gives residual singleton value at
+most $(1+C)/s$ before rounding, while an $H$ singleton has value
+$\delta$.  Their cardinality padding is identical, so the rounded
+difference is greater than $\delta-(1+C)/s-\Delta>0$.
+For instance $s\ge4(1+C)^2$ suffices.  A positive matching using
+all of $H$ exists; any positive matching using a residual item
+leaves an $H$ item unused and is strictly improved by exchanging
+those two items.  A zero-valued matching is not optimal.
+
+Give four reserved items to each type-A agent and one hidden block
+to each type-B agent.  In the planted instance this yields
+\begin{equation}\label{simp:planted-opt}
+       \mathrm{OPT}\ge4^{1/4}(1-\zeta-\Delta)^{3/4}.
+\end{equation}
+In any reference allocation with exactly one reserved item per
+agent, type-A values are one.  The disjoint type-B residual bundles
+$T_i$ obey \eqref{simp:reference-sum}, so their average rounded
+value is at most $\delta+\tau+(1+C)\rho_k$.
+Arithmetic--geometric mean gives the uniform restricted bound
+\begin{equation}\label{simp:reference-NSW}
+       \mathrm{NSW}_{\rm ref}\le
+                  [\delta+\tau+(1+C)\rho_k]^{3/4}.
+\end{equation}
+
+\subsection{Exact transcript masking and the quantifiers}
+
+For each fixed $T\subseteq M$ and each hidden block, the variable
+$Y_j=|T\cap X_j|$ samples $s$ items without replacement from $ks$,
+with mean $|T|/k$.  Exposing these draws gives a conditional-mean
+martingale whose increments have absolute value at most one: at
+draw $r$ its two possible next conditional means differ by
+$1-(s-r)/(ks-r)\in[0,1]$.
+For a mean-zero increment $D$ with $|D|\le1$,
+$\mathbb E e^{uD}\le\cosh u\le e^{u^2/2}$.
+Multiplication and optimization of the exponential bound show
+$\Pr\{|Y_j-|T|/k|>\eta s/2\}\le2e^{-\eta^2s/8}$.
+A union bound therefore gives
+\[
+ \Pr\{\max_{p,q}|x_p(T)-x_q(T)|>\eta\}
+                  \le2k e^{-\eta^2s/8}.
+\]
+
+Fix the algorithm's coins and run it on the reference oracle.
+Every answer, including its cardinality padding and floor, depends
+only on the two visible cardinalities $|S\cap H|,|S\cap M|$.
+The entire reference query sequence and output are independent of
+the hidden partition.  On a balanced query, \eqref{simp:masked-properties}
+gives exactly equal inputs to the identical padding and floor in
+\eqref{simp:rational-B}; the two oracle answers are exactly equal.
+Union bound over the $q$ reference queries and the $k$ type-B
+output bundles.  Except with probability
+$2k(q+k)e^{-\eta^2s/8}$, the adaptive planted execution has the
+identical transcript and output values.  Equations
+\eqref{simp:planted-opt}--\eqref{simp:reference-NSW} then imply
+\[
+ \frac{\mathrm{OPT}}{\mathrm{NSW}_{\rm out}}\ge
+ 4^{1/4}\left(\frac{1-\zeta-\Delta}
+                   {\delta+\tau+(1+C)\rho_k}\right)^{3/4}.
+\]
+Zero output welfare already implies failure.  Averaging over the
+fixed coins proves the same assertion for randomized algorithms.
+
+For a prescribed $\varepsilon$, first fix a sufficiently large $k$
+divisible by three; then fix sufficiently small $\zeta$ and rational
+$\tau$, and choose the masked pair with $C<\zeta$.  Its $\eta>0$
+is now fixed.  Finally take $s\to\infty$.
+Since $\rho_k\to1-e^{-1}$, the displayed ratio is greater than
+$R_\star-\varepsilon$ for all large $s$.
+Put $n_0=4k/3$ and $c=\eta^2/(32k)$.  For $q\le e^{cm}$,
+the exceptional probability is at most
+$\exp(-3\eta^2s/32+O_\varepsilon(1))=o(1)$.
+This proves the theorem with $n_0$ fixed and short rational answers.
+
+The conclusion also excludes expected welfare factor $1\le R<R_\star$.
+Indeed, for $R<R'<R_\star$ and
+$X=\mathrm{NSW}_{\rm out}/\mathrm{OPT}\in[0,1]$,
+$\mathbb EX\ge1/R$ would contradict the vanishing success probability, since
+\[
+ \Pr\{X\ge1/R'\}\ge
+               \frac{1/R-1/R'}{1-1/R'}>0.
+\]
+Together with the upper guarantee for every $R_\star+\varepsilon$, this
+proves the exact infimum threshold under the stated framework restriction.

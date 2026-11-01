@@ -1,0 +1,15 @@
+\begin{center}
+\begin{tabular}{rrrrr}
+\toprule $h$ & $Y_h$ & Visited boxes & Analytic leaves & Numerical gap $\times I$\\\midrule
+1 & 128 & 1,078,272 & 55 & 14,036,839\\
+2 & 32 & 2,061,330 & 193 & 2,649,001\\
+3 & 6 & 1,441,338 & 765 & 12,665,116\\
+4 & 2 & 331,952 & 2,316 & 206,991,296\\
+\bottomrule\end{tabular}
+\end{center}
+The target lower numerator is $194380961269347$. Every analytic leaf
+has reserve at least $10^{-6}$ below the same rational allowance.
+All numerical gaps are positive; the four full covers visit 4,912,892 boxes.
+For each count, the visited total is twice the number of accepted and
+excluded leaves minus two, accounting for both root rectangles. Fresh
+execution exhausts every root and checks source and input integrity.

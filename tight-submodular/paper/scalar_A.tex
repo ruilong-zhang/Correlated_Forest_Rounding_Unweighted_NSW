@@ -1,0 +1,332 @@
+\section{One analytic proof for the repair rectangle}\label{simp:scalar-A}
+
+Use the scalar state, controller, and ledger of
+Section~\ref{simp:scalar-state}.  The repair rectangle is contained in
+\[
+ 0\le t\le T:=3/25,\qquad 0\le D\le D_m:=26267/25000.
+\]
+In addition to the constants already defined, put
+\[
+ R_0=1.00024010,\quad t_0=9/125,\quad D_0=101/100,
+ \quad \varepsilon_a=3/5000,
+\]
+\[
+ n_j=y_j+\tfrac25(t-S_j),\qquad b_j=\tfrac6{25}A_j,
+ \qquad \widetilde P_j=P_j-\tfrac12\min(\pi_j,K).
+\]
+Thus $0\le b_j\le(6/25)\zeta$, and $b_j=0$ when $\pi_j>K$.
+The symbol $b_j$ denotes a head charge, whereas the controller target
+$b\in[0,b_c]$ is a single row quantity.  Write $d=\max(1,D)$.
+
+\begin{theorem}[All counts through four on the repair rectangle]
+\label{simp:A-payment}
+The common controller equals $\mu=k/d$ throughout this rectangle.
+For $h=0,1,2,3,4$ and every comparator head set of size $h$,
+\begin{equation}\label{simp:A-full-ledger}
+ \mathcal E(H)+\Psi(H)+\sum_{j\in H}b_j+(4-h)b_c
+ \le U_\star+(h-1)\lambda_\star.
+\end{equation}
+For $h=4$ and $D\ge D_0$, the left side may additionally contain
+$b_c$.  All prices and all nonnegative head sizes are included.
+\end{theorem}
+
+The proof below uses only analytic bounds and a finite list of directed
+constant comparisons.  The companion checker recomputes those comparisons
+from rational constants; it has no parameter grid or older proof input.
+
+\subsection{The floor and the first three counts}
+
+\begin{lemma}\label{scalar:A-low}
+On the repair rectangle, $H(k/d)>1/250$.  Moreover,
+\[
+ \mathcal E_0<-\log\beta-1/250,
+ \qquad
+ \mathcal E(H)+\Psi(H)
+ <U_\star+(h-1)\lambda_\star-1/250\quad(1\le h\le3).
+\]
+\end{lemma}
+\begin{proof}
+The localized branch decreases the original HOME transfer by less than
+$\varepsilon_a$.  Since $M(1)=481/400>D_m$, for $D\ge1$ both the
+actual HOME credit and $C(t,D,0;\mu)$ are at least
+$(3/5)\log D-\varepsilon_a$.  They are nonnegative for $D\le1$.
+Consequently
+\[
+ H(k/d)\ge1+\log k-\tfrac25\log D_m-kT-\varepsilon_a
+ >0.0045464>1/250>b_c.
+\]
+The root is therefore clipped to $k/d$, even for the largest permitted
+boost.  The zero-head tangent proves its asserted reserve.
+
+For a head set put
+\[
+ x_j=\max\{1,[y_j+k(t-S_j)]/R_0\},\quad
+ A=a+k\gamma,\quad\theta=\mu\beta=1/(4d).
+\]
+The unconditional ordinary slope exceeds $k$, so $x_j\le e^{\pi_j}$.
+If $x_j>1$, then
+$y_j\ge(R_0-kT)x_j$ and
+\[
+ \frac{D_m}{R_0-kT}<\frac{30}{23},\qquad M(30/23)<4/3.
+\]
+The reservation bound and monotonicity in the score argument give
+\begin{equation}\label{simp:A-owner}
+ e^{P_j^{\rm old}}\ge\max\{x_j^{2/5},3x_j/4\}.
+\end{equation}
+At $x_j=1$ this follows from nonnegative net prices.  The concavity of
+the logarithm and the power branch imply
+\begin{equation}\label{simp:A-short-chord}
+ P_j^{\rm old}\ge\tfrac14R_0(x_j-1)
+                  \ge\theta R_0(x_j-1),\qquad 1\le x_j\le8.
+\end{equation}
+It suffices to check
+$(2/5)\log2>R_0/4$, $\log(3/2)>R_0/4$, and
+$\log6>7R_0/4$, using the power branch on $[1,2]$ and the
+linear-price branch on $[2,8]$.
+
+Shared overlap and $z>\beta k=1/4$ give
+\[
+ V_+(H)\le A+R_0\sum_jx_j-hkt,
+ \qquad \beta a+z\gamma\ge\beta A.
+\]
+For all $x_j\le8$, the tangent
+$\log V\le\theta V-1-\log\theta$, followed by
+\eqref{simp:A-short-chord}, yields
+\begin{equation}\label{simp:A-low-bound}
+ \mathcal E(H)+\Psi(H)
+ \le-\log\theta-1+h\theta R_0
+       +(1-h/4)\mu t-\phi_H+hK/2.
+\end{equation}
+Let $C_h=hR_0/4+(1-h/4)kT$.
+For $D\le1$ the right side is at most
+$\log4-1+C_h+hK/2$; for $D\ge1$ it is at most
+\[
+ \log4-1+\tfrac25\log D+C_h/D+\varepsilon_a+hK/2.
+\]
+The latter increases in $D$ for $h=1$ and decreases for $h=2,3$:
+$C_1<2/5$ and $C_h>(2/5)D_m$ for $h=2,3$.
+The resulting endpoint reserves below
+$U_\star+(h-1)\lambda_\star$ exceed, respectively,
+$0.01184$, $0.01136$, and $0.004884$.
+
+For $h=1$ and $x>8$, use $P^{\rm old}\ge\log(3x/4)$ directly.
+Since
+\[
+ \theta(R_0x-kt)\ge(8R_0-kT)/(4D_m)>1,
+\]
+the function $\log(A+R_0x-kt)-\theta A$ decreases for $A\ge0$.
+At $A=0$ this gives the uniform upper bound
+\[
+ \mathcal E_1+\Psi\le\log(4R_0/3)+kT+\varepsilon_a+K/2,
+\]
+whose reserve exceeds $0.354$.
+
+To include unbounded heads for $h=2,3$, use the following deletion
+fact.  If a nonnegative monotone submodular upper value $V_+$ has $h$
+heads, then
+$\sum_jV_+(H\setminus\{j\})\ge(h-1)V_+(H)$.
+When every $(h-1)$-head expression, with identical radial and HOME
+terms, is at most $B$, the $h$-head expression with charged net prices
+$p_j$ is at most
+\begin{equation}\label{simp:A-deletion}
+ B+\log\left(\frac{\sum_j e^{-p_j}}{h-1}\right).
+\end{equation}
+This follows by exponentiating the deletion inequalities and summing.
+For $p_j=\widetilde P_j$ all inverse prices are at most one.
+If some $x_j>8$, \eqref{simp:A-owner} gives
+\[
+ e^{-\widetilde P_j}<e^{K/2}/6<0.167<e^{\lambda_\star}-1.
+\]
+For $h=2,3$ the increment in \eqref{simp:A-deletion} is less than
+$\lambda_\star$.  Induction from the proved one-head bound retains
+the full $1/250$ reserve.  The actual $q,\mu,\phi_H$ and all prices
+remain fixed in this induction.
+\end{proof}
+
+The inequalities
+\[
+ 4b_c<1/250,\qquad
+ (4-h)b_c+(6h/25)\zeta<1/250\quad(h=1,2,3)
+\]
+establish \eqref{simp:A-full-ledger} for the first four counts.
+In particular, the full three-head ledger is now available for deletion.
+
+\subsection{Two low-price edges, followed by the same tangent}
+
+The price envelope gives $\widetilde P_j\ge0$.
+For $D\le D_0$, $\theta=1/(4d)$ lies in $[1/(4D_0),1/4]$.
+We prove two forms of the same paid edge inequality:
+\begin{equation}\label{simp:A-paid-edge}
+ \theta\{y+s(t-S)-R_s\}+b_j\le\widetilde P,
+ \qquad 0\le\pi\le\log2,
+\end{equation}
+where
+\[
+ (s,R_s)=
+ \begin{cases}(k,1),&0\le t\le t_0,\\
+ (2/5,R_4),&t_0\le t\le T.
+ \end{cases}
+\]
+The equality case of the first form supplies the tight constant.
+
+\paragraph{The first edge.}
+Write $r=t-S$, $x=y+kr$, $w=e^\pi$, and $\vartheta=k/(2/5)$.
+We first prove
+\begin{equation}\label{simp:A-critical-edge}
+ x\le1+4\widetilde P-4D_0b_j.
+\end{equation}
+If $x\le199/200$, this follows from
+$1/200>4D_0(6/25)\zeta$.
+Otherwise $y>199/200-kt_0$ and
+\[
+ t_0<(3/40)(199/200-kt_0),\qquad
+ D_0<(21/20)(199/200-kt_0).
+\]
+The head is an actual auxiliary NEW head.  Thus
+$\delta=1-n/w^2\ge0$ and its singleton and NEW constraints imply
+\[
+ x\le w+kr,\qquad
+ x=w^2(1-\delta)-(2/5-k)r.
+\]
+A convex combination eliminates $r$:
+\begin{equation}\label{simp:A-coupled-edge}
+ x\le(1-\vartheta)w+\vartheta w^2-\vartheta w^2\delta.
+\end{equation}
+Independently, the unconditional ordinary score gives $x\le R_0w$.
+
+For $0\le\pi\le K<a_0$, use
+$g(\pi)\ge\pi-5\pi^2$ and
+$e^s\le1+s+(3/5)s^2$ for $0\le s\le2a_0$.
+Then
+\[
+ 1+4\widetilde P-[(1-\vartheta)e^\pi+\vartheta e^{2\pi}]
+ \ge[1-\vartheta-(112/5)K]\pi\ge0.
+\]
+Moreover $\vartheta>(24/25)D_0$, so the last term of
+\eqref{simp:A-coupled-edge} pays $4D_0b_j$.
+Above $K$, the arithmetic charge vanishes.  On $[K,a_0]$ the
+derivative of the preceding price difference is at least
+$4e^{-10a_0}-2e^{2a_0}>0$.
+On $[a_0,1/400]$ use
+$1+4b_0-2K-R_0e^{1/400}>0$.
+On $[1/400,\log2]$ use concavity and the positive endpoints of
+$1+(8/5)\pi-2K-R_0e^\pi$.
+These four intervals prove \eqref{simp:A-critical-edge}.
+Since $4\theta\le1$, $4D_0\theta\ge1$ and
+$\widetilde P,b_j\ge0$, it implies \eqref{simp:A-paid-edge}.
+
+\paragraph{The second edge.}
+Now set $N=y+(2/5)(t-S)$ and $R=R_4$.
+For $N\le9/10$, the inequality follows from
+$(R-9/10)/(4D_0)>(6/25)\zeta$.
+Otherwise $y>9/10-(2/5)T=213/250$; hence $D_m<4y$ and
+the conditional ordinary score gives $N\le Rw$.
+For $\pi\le K$, the function
+\[
+ N\longmapsto\theta N+\tfrac6{25}
+              \min\{(1-N/w^2)^+,\zeta\}
+\]
+is nondecreasing because $\theta>6/25$.
+Substitute $N=Rw$ and remove the truncation at $\zeta$.
+The remaining arithmetic term is zero on $[0,L]$ and has derivative
+at most $6/25$ on $[L,K]$.
+The directed inequality
+\[
+ e^{-10K}-\tfrac12-R_4e^K/4-6/25>0
+\]
+therefore proves \eqref{simp:A-paid-edge} on $[0,K]$.
+On $[K,a_0]$ use $e^{-10a_0}>R_4e^{a_0}/4$.
+For the remaining two intervals it suffices to check
+\[
+ b_0-K/2>R_4(e^{1/400}-1)/4,
+\]
+\[
+ (2/5)(1/400)-K/2>R_4(e^{1/400}-1)/4,
+ \qquad (2/5)\log2-K/2>R_4/4.
+\]
+The first uses the constant net-price branch; the latter two use
+the endpoints of a concave logarithmic-price difference.
+
+\paragraph{The common four-head comparison.}
+Put $A_s=a+s\gamma$ and $N_{s,j}=y_j+s(t-S_j)$.
+Shared overlap and $z\ge\beta s$ give
+\[
+ V_+\le A_s+\sum_jN_{s,j}-4st,
+ \qquad \beta a+z\gamma\ge\beta A_s.
+\]
+Apply \eqref{simp:A-paid-edge} and the tangent at
+$\theta=\mu\beta$; discard only the nonnegative $\mu q$.
+The result for either edge is
+\begin{equation}\label{simp:A-common-four}
+ \mathcal E_4+\Psi+\sum_jb_j
+ \le-\log\theta-1+4\theta R_s-4\theta(s-k)t-\phi_H.
+\end{equation}
+Every HOME branch is at least
+$g_D=\log d-1+1/d$ on $D\le D_0$.
+For the localized branch this follows from $h_0\ge f_{10}$ and
+\[
+ f_{10}(\log D)-g_D
+ =1-D^{-1}-(1-D^{-10})/10\ge0\quad(D\ge1),
+\]
+by the geometric-series identity.  For the other branches use
+$\log M(1)>g_{D_m}$ and $(3/5)\log D\ge g_D$.
+Since $\theta=1/(4d)$, \eqref{simp:A-common-four} becomes
+\begin{equation}\label{simp:A-common-result}
+ \mathcal E_4+\Psi+\sum_jb_j
+ \le\log4-\{(s-k)t-(R_s-1)\}/d\le\log4.
+\end{equation}
+The first edge has zero numerator.  For the second,
+$(2/5-k)t_0>R_4-1$; this is the only required time threshold.
+
+\subsection{All high prices and the entire upper-scale part}
+
+First keep $D\le D_0$ and suppose some $\pi_j\ge\log2$.
+Set $p_j=\widetilde P_j-b_j$ in \eqref{simp:A-deletion}.
+Each inverse price is at most $e^{(6/25)\zeta}$.
+The distinguished head has $b_j=0$ and
+\[
+ e^{-p_j}\le2^{-2/5}e^{K/2}
+ <3e^{\lambda_\star}-3e^{(6/25)\zeta}.
+\]
+Thus $\sum_j e^{-p_j}<3e^{\lambda_\star}$.
+The already proved three-head ledger implies the four-head bound.
+Together with \eqref{simp:A-common-result}, this includes every price
+on $D\le D_0$, without a separate three-head calculation.
+
+For $D_0\le D\le D_m$, use the unconditional proxy
+$x_j$ and $A=a+k\gamma$ from Lemma~\ref{scalar:A-low}.
+The owner bound \eqref{simp:A-owner} implies the global chord
+\[
+ e^{P_j}\ge\max\{3x_j/4,x_j^{2/5}\}
+                    \ge1+(x_j-1)/3\quad(x_j\ge1).
+\]
+The linear branch proves it for $x_j\ge8/5$; concavity proves the
+remaining interval using $(8/5)^2>(6/5)^5$.
+Also $4(R_0-kT)>3R_0$.  If $Z=\sum_j(x_j-1)$, then
+\[
+ V_+\le A+4(R_0-kt)+R_0Z,
+ \qquad e^{\sum_jP_j}\ge1+Z/3.
+\]
+Since $A+4(R_0-kt)>3R_0$, division gives
+\[
+                    V_+e^{-\sum_jP_j}\le A+4(R_0-kt).
+\]
+The logarithmic tangent cancels $A$ and $t$ exactly, leaving
+\[
+ \mathcal E_4\le-\log\theta-1+4\theta R_0-\phi_H
+ =\log4+g_D+(R_0-1)/D-\phi_H.
+\]
+Bound the entire additional ledger, including the optional private
+charge, by $C_*=2K+(24/25)\zeta+b_c$.
+Every HOME branch exceeds $g_D+(R_0-1)+C_*$ throughout this interval.
+For the three branches the endpoint checks are, respectively,
+\[
+ \log M(1)-g_{D_m},\qquad
+ (3/5)\log D_0-g_{D_0},\qquad
+ 1-D_0^{-1}-b_0
+ >(R_0-1)+C_*.
+\]
+The second difference increases for $D<5/2$; the third increases
+for all $D>0$, and $\log D_0>a_0$ puts it on the constant-cap piece.
+This proves the additional $b_c$ payment on the upper-scale part,
+and completes Theorem~\ref{simp:A-payment}.

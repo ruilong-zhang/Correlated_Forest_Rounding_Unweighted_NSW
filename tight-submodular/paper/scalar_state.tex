@@ -1,0 +1,126 @@
+\section{One scalar state and one radial direction}\label{simp:scalar-state}
+
+Fix one auxiliary primal--dual optimum, one row, and a residual comparator
+$O$ with reserved comparator heads $H$. Normalize by the same $u$ throughout:
+\[
+ t=F/u,\ D=\alpha/u,\quad a=f(O)/u,\quad
+ \gamma=[\mathbb Ef(R\cup O)-f(O)]/u,\quad V=f(O\cup H)/u,
+\]
+\[
+ y_j=p_j/u,\quad S_j=(F-d_j)/u,\quad
+ Q=\max\{0,\max_{j\in H_0}(F-d_j-\beta p_j)\},\quad q=Q/u.
+\]
+Thus $a\ge0$, $0\le\gamma\le t$, $a+\gamma\ge t$,
+$0\le S_j\le\min(y_j,t)$, and
+$\widehat q=\max(0,\max_{j\in H}(S_j-\beta y_j))\le q\le e^{-1}t$.
+The maximum defining $Q$ is observable and independent of the comparator.
+With the transfer $\phi$ of Section~\ref{simp:controller-section}, set
+$P_j=\pi_j-\phi(\pi_j,\rho_j)$, $\phi_H=\phi(\pi_i,\rho_i)$, and
+\begin{equation}\label{eq:paper-exact-scalar}
+ \mathcal E(H)=\log V-\sum_{j\in H}P_j-\phi_H
+              -\mathcal B,\qquad
+ \mathcal B=\mu(\beta a+e^{-1}\gamma-t+q).
+\end{equation}
+Zero comparator values are treated by limits. Shared overlap gives
+\begin{equation}\label{eq:paper-shared-overlap}
+ V\le V_+(H):=a+\sum_{j\in H}y_j-(\sum_{j\in H}S_j-\gamma)^+.
+\end{equation}
+Indeed $V\le a+\sum y_j$ and, by diminishing returns after union with $R$,
+$V\le a+\gamma+\sum(y_j-S_j)$. The function $V_+$ is nonnegative,
+monotone and submodular on head subsets. These properties follow from
+$S_j\le y_j$ and concavity of the negative positive-part function.
+
+\subsection{Feasibility and actual HOME credit}
+
+Every ordinary score supplies its inequality $T/u\le e^{\pi_j}$;
+in particular $y_j\le e^{\pi_j}$ and
+\[
+ y_j+.395494177(t-S_j)\le1.00024010e^{\pi_j},\qquad
+ y_j+.4(t-S_j)\le R_4e^{\pi_j}\quad\text{if }D\le4y_j.
+\]
+An actually eligible auxiliary NEW head also has
+$y_j+.4(t-S_j)\le e^{2\pi_j}$; a repair-only candidate need not.
+Let $w_*$ be the maximum of one and all available normalized ordinary
+scores. Reservation gives $e^{-\rho_j}\le\min(1,D/y_j)$, hence
+\begin{equation}\label{simp:owner-price}
+ P_j\ge P_j^{\rm old}\ge
+ \max\left\{\frac25\log w_*,
+ \log\frac{w_*}{M(w_*\min(1,D/y_j))}\right\},
+ \qquad P_j\ge g(\log w_*).
+\end{equation}
+Both branches of $M(v)/v$ decrease, so the owner expression increases with
+its score argument. All zero-coordinate limits are continuous.
+Private feasibility gives
+\begin{equation}\label{simp:private-domain}
+ DG(t/D)\le1,\qquad 0\le t\le1/c_0<3,\qquad
+ 0\le D\le10^{10}/487864347<21;
+\end{equation}
+at $D=0$ the limiting condition is $t\le1$.
+
+The clipped HOME guarantee from Section~\ref{simp:score-primitives} implies
+$e^{\pi_i}\ge W(t-q,D)$ and $e^{\pi_i-\rho_i}\ge D$.
+For the first, substitute $p_i/u=De^{\rho_i}$ and use that
+$De^\rho+Dv((T/D-\beta e^\rho)^+)$ increases in $\rho\ge0$:
+its derivative is nonnegative since $v'\le1$ and $\beta<1$.
+Monotonicity of every transfer branch then gives
+$\mu q+\phi_H\ge C(t,D,\widehat q;\mu)$, and so
+\begin{equation}\label{eq:paper-relaxed-scalar}
+ \mathcal E(H)\le\log V_+(H)-\mu(\beta a+e^{-1}\gamma-t)
+          -C(t,D,\widehat q;\mu)-\sum_{j\in H}P_j.
+\end{equation}
+In all deletion arguments the actual $Q$, $\mu$, $\phi_H$ and item prices
+stay fixed. One never selects a separate favorable credit after a deletion.
+
+\subsection{The observable radial inequality}
+
+For normalized monotone submodular $v$, draw $s\in[0,1]$ with density
+$e^s/(e-1)$, then $A_s\sim R(sx)$. Put
+$m_g^v=\mathbb E[v(g\mid A_s)]$, taking zero marginal when $g\in A_s$.
+Choose the raw function if the maximum bonus $Q$ is zero, and otherwise
+the contraction attaining that maximum. Simultaneously for every $O$,
+\begin{equation}\label{na:radial-ineq}
+ \beta\langle m^v,\mathbf1_O-x\rangle
+ \ge\beta f(O)+e^{-1}[\mathbb Ef(R\cup O)-f(O)]-F+Q.
+\end{equation}
+Here is a proof that also covers $F=0$. Let
+$\mathcal L_f(y)=\mathbb Ef(A_s)+\langle m^f,y\rangle$.
+Diminishing returns majorizes the multilinear extension. With
+$q_0(s)=F(sx)$ and own-coordinate independence,
+\[
+ \mathcal L_f(x)\le\frac1{e-1}\int_0^1e^s(q_0+q_0')\,ds=F/\beta.
+\]
+Ray concavity of $f(S\cup O)-f(O)$ gives
+$\mathcal L_f(\mathbf1_O)\ge f(O)+[\mathbb Ef(R\cup O)-f(O)]/(e-1)$.
+Subtract. Applying the result to contraction $f^j$ adds
+$F-d_j-\beta p_j$, together with the nonnegative terms
+$(1-2e^{-1})f(j\mid O)+e^{-1}\mathbb Ef(j\mid R\cup O)$.
+Choose the largest nonnegative bonus. Finally
+$F-d_j\le\min(F,p_j)$ implies $Q\le e^{-1}F$.
+Thus the algorithmic reward $r_{ig}=\mu_i\beta m_g^{v_i}/u_i$ satisfies
+$\mathcal B_i\le\langle r_i,\mathbf1_{O_i}-x_i\rangle$.
+
+\subsection{The only ledger to be paid}
+
+For $L=\log R_4$, define $K=7L/6$, $T_c=12L/5$,
+$P_c=43L/25$, $\zeta=1-e^{-T_c}$, and
+$b_i=\min(\log(u_i/T_{i0}),P_c)/3$. Put
+\[
+ \Psi(H)=\tfrac12\sum_{j\in H}\min(\pi_j,K),\qquad
+ A_j=\mathbf1_{\{\pi_j\le K\}}
+       \min\{(1-N_{ij}/(u_i e^{2\pi_j}))^+,\zeta\}.
+\]
+The one-flow theorem uses exactly
+\begin{equation}\label{eq:integration-row-ledger}
+ \ell_i(H)=\Psi(H)+
+ \begin{cases}(P_c/3)(4-|H|)^++(6/25)\sum_{j\in H}A_j,&i\in A,\\
+ b_i,&i\in B.
+ \end{cases}
+\end{equation}
+The remaining proof establishes the single inequality
+\begin{equation}\label{eq:integration-scalar-interface}
+ \mathcal E_i(H)+\ell_i(H)\le U_\star+(|H|-1)\lambda_\star
+ \quad\text{for every row and every comparator head set.}
+\end{equation}
+The exact identities $U_\star-\lambda_\star=-\log\beta$ and
+$U_\star+3\lambda_\star=\log4$ are responsible for the tight zero- and
+four-head balances. All other cases have certified positive slack.

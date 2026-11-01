@@ -1,0 +1,238 @@
+\section{All counts, finite implementation, and the guarantee}\label{simp:finite}
+
+If no positive singleton perfect matching exists and $|M|\ge n$, reserve
+any $n$ items and give one to each agent; then $\OPT=0$ and the guarantee
+is immediate. If $|M|<n$, any allocation suffices. Below assume a positive
+reservation, so every logarithmic comparison is finite.
+
+\subsection{No further head counts or scalar cases}
+
+Fix one row and its residual comparator. For $h=|H|\ge4$, nonnegative
+monotone submodularity gives
+\[
+ \sum_{I\subseteq H,\ |I|=4}f(O\cup I)
+                         \ge {h-1\choose3}f(O\cup H).
+\]
+Expand into ordered nonnegative marginal increments: each item occurs in
+exactly ${h-1\choose3}$ subsets and its marginal in a smaller set is at
+least its full ordered marginal. Extra copies of $f(O)\ge0$ help.
+Since $\widetilde P_j\ge0$, exponentiating and summing the proved four-head
+price inequalities yields
+$\mathcal E(H)+\Psi(H)\le\log h$. A row-independent $+b$ paid by every
+four-subset is retained once in this inequality.
+For B this suffices since $\log h\le\log4+(h-4)\lambda_\star$.
+For A the remaining arithmetic charge is at most $(6h/25)\zeta$.
+For every real $h\ge5$,
+\[
+ (h-4)\lambda_\star-\log(h/4)-(6h/25)\zeta>0:
+\]
+its value at five exceeds $.00782988$ and its derivative is at least
+$\lambda_\star-1/5-(6/25)\zeta>.03171853$.
+Thus \eqref{eq:integration-scalar-interface} holds for all head counts.
+
+Fix an optimal allocation and assign it any unused reserved items.
+Its reserved subsets $H_i$ partition $H_0$, so $\sum_i|H_i|=n$.
+Let $J=\sum_i\log u_i+\sum_j\pi_j$ and let $S$ be the logarithmic
+score after the single sampled repair at an iterate. The graph theorem gives
+$\mathbb E[S\mid x]\ge J-\sum_i\ell_i(H_i)$.
+Summing \eqref{eq:integration-scalar-interface} cancels both
+$\lambda_\star$ and the HOME transfer: each reserved item appears once
+as a comparator head and once as a home column. Hence
+\begin{equation}\label{simp:iterate-bound}
+ n\log\OPT\le\mathbb E[S\mid x]+nU_\star+\sum_i\mathcal B_i.
+\end{equation}
+The comparator is used only in this proof. All prices, means and credits
+come from the same auxiliary solve.
+
+On active normalized rows $u\ge\Gamma\alpha\ge\theta_0/d$ and
+$0\le\mu\le1$. Thus rewards are uniformly bounded by $d/\theta_0$.
+For $N\le nd$ active coordinates, a bound $G_0$ on implemented rewards,
+and $T$ projected steps of size $1/(G_0\sqrt T)$, the squared-distance
+identity gives, for every fixed residual comparator,
+\[
+ \frac1T\sum_{q=1}^T\sum_i\mathcal B_i^{(q)}\le\frac{NG_0}{\sqrt T}
+\]
+in the exact model. This uses only the radial inequality, not continuity
+of the root or the selected LP solution. Select the iterate uniformly
+and perform the single repair and common rounding there.
+\eqref{simp:iterate-bound} then gives
+$\mathbb E\log\NSW\ge\log\OPT-U_\star-\text{regret}/n$,
+before finite errors. No repair at discarded iterates is necessary.
+
+\subsection{A uniform finite sensitivity bound}
+
+All sampled residual statistics have range at most one after subtracting
+known physical baselines. Let
+\[
+ \kappa_0=\min\{1,c_0/(4b_s)\},\quad L_0=\lceil2/\kappa_0\rceil,
+ \quad r_0=(\kappa_0/4)^{L_0},\quad
+ K_f=\left\lceil\frac{10^6(1+r_0^{-1})^2}{\theta_0^4}\right\rceil.
+\]
+This fixed integer bounds the needed score sensitivities by $K_fd$.
+The private log score has sensitivity $1/(\theta_0\alpha)$.
+Affine and HOME numerators have bounded mean derivatives. The only
+nontrivial case is the joint branch with floor $m-b_s\alpha$.
+Its activation implies $F\ge\alpha$. At the evaluation point, a retained
+finite physical entry has true value at least $e^{-\eta}c_0F\ge c_0F/2$.
+Follow it only until a further halving. With
+$r=(m-b_s\alpha)/(b_s\alpha)$, its normalized value satisfies
+\[
+ T/(b_s\alpha)=\min_{0\le q\le1}
+       [1-q+r^{1-q}(1+r)^q]
+       \le\kappa_0/2+2r^{\kappa_0/2}\quad(0<r\le1).
+\]
+Thus $r\ge(\kappa_0/4)^{2/\kappa_0}\ge r_0$ while the normalized
+value is at least $\kappa_0$. Differentiation of the variational expression
+bounds its mean derivative by $1+1/r_0$. The other joint branch has
+mean derivative one and remains on that branch when its mean decreases.
+All stored positive scores start above $\theta_0\alpha$; before halving,
+their log sensitivity is at most
+$2(1+r_0^{-1})/(\theta_0\alpha)\le K_fd$.
+The errors below are smaller than a possible halving displacement.
+Physical entries dominated by the private option are simply discarded;
+this argument does not reintroduce physical guard labels.
+
+For confidence means, subtract baselines first and clamp the upper
+contraction mean to the upper raw mean. Evaluate monotone score formulas
+at upper mean endpoints and enclose their logarithms upward. The rational
+LP is therefore feasible for every true ordinary/private constraint.
+The coherent NEW weights, lower-endpoint eligibility, final rectangular
+classification and shaved repair thresholds are exactly those of
+Section~\ref{simp:algorithm-interface}. They retain every truly eligible
+NEW constraint, every positive supported rational mass and the broad
+minorant condition. Supported score overstatement costs at most $2\eta$
+per row, the false-A strip costs less than $9\eta$, and the upper-root
+error costs at most $(32\beta/c_0)\sqrt\eta$. The entire new loss is
+less than $64\sqrt\eta$ per row, including critical equality points.
+
+For clarity, the root enclosure is computable without a stability
+assumption. Reparameterize $Q=st$, $s\in[0,e^{-1}]$; the credit objective
+is $6$-Lipschitz in $s$ on $t\le3$ and changes by at most
+$2|\Delta t|+|\Delta D|$ with its normalized means. A mesh of width
+$\eta/100$ and enclosing elementary evaluations give a credit/target
+error at most $16\eta$. The private target lies in
+\[
+ \tfrac13\min(v-w_0,P_c)\le b\le
+ \tfrac13\min(v-w_0+\eta,P_c).
+\]
+To use the uncertain admissible endpoint, first enclose it by
+$\bar\mu_-:=\min(1,1/t^+)\le\bar\mu\le
+\bar\mu_+:=\min(1,1/t^-)$, with the value one at a zero denominator.
+These endpoints differ by at most $\eta$. If the lower enclosure of
+$H(\bar\mu_-)-b$ is nonpositive, return $\bar\mu_+$ as a root upper
+bound; the quadratic separation gives error at most $8\sqrt\eta+\eta$.
+Otherwise bisect within the known increasing interval $(0,\bar\mu_-]$.
+At an unresolved sign, the true residual has magnitude at most $32\eta$,
+so the root lies within $8\sqrt\eta$ of that midpoint. Use the upper
+end of that bracket, also bounded by $\bar\mu_-$, or stop at width $\eta$.
+Finally clip upward by the upper enclosure of the floor and at one.
+The resulting upper multiplier differs from $\mu$ by at most
+$32\sqrt\eta$; monotonicity beyond $\bar\mu$ is never assumed.
+The normalized radial coefficient is at least $-\beta t$, so upward
+root error costs at most the stated uniform amount even if the
+computed multiplier slightly exceeds the uncertain $1/t$ endpoint.
+
+\subsection{One explicit budget and every-history feasibility}
+
+If there are no active residual coordinates, return the reservation,
+which is optimal; otherwise $d,N\ge1$ in the formulas below.
+For a required logarithmic tolerance $\xi>0$, put
+$\xi_0=\min(\xi,1)$, $\epsilon_0=\xi_0/10^6$,
+$C_f=10^6(K_f+1)^2$, and choose
+\begin{equation}\label{simp:precision}
+ \eta=\min\left\{10^{-10},
+       \left(\frac{\epsilon_0}{10^6C_f(d+1)(N+1)}\right)^4\right\},\qquad
+ \delta_m=\frac{\eta}{100C_f(d+1)(N+1)}.
+\end{equation}
+Use $\delta_m$ for primitive online mean and elementary-function errors,
+then enclose scores and normalized means at scale $\eta$.
+Division by $u\ge\theta_0/d$ and the preceding $K_fd$ sensitivity are
+absorbed by \eqref{simp:precision}. All elementary logarithms are evaluated
+to directed rational accuracy; large scores are handled logarithmically.
+Take $G_0=4C_fd$ and $T$ the smallest power of four with
+$\sqrt T\ge100NG_0/\epsilon_0$. Project with step
+$\tau=1/(G_0\sqrt T)$ and reset coordinates downward to mesh at most
+$\tau\epsilon_0/(100N)$. Downward resets preserve capacities and add at
+most $2Nh+Nh^2$ to squared distance at mesh $h$; the corresponding
+regret, reward and reset terms cost at most $4n\epsilon_0$.
+For contraction selection omit $p_{ij}>2$ on normalized active rows,
+since their bonus is negative, and maximize the remaining estimates
+alongside an exact zero dummy. Its true bonus loss is at most
+$6\delta_m$ and is absorbed by the same budget.
+
+For the common forest engine use normalized derivative accuracy
+$a=\epsilon_0/[10000C_f(d+1)(N+1)]$ and downward mesh at most
+$a/(d+1)$. Minorant rows are normalized by dividing their variable
+range by two. The explicit cycle/pair losses in Lemma~\ref{simp:forest}
+then cost less than $n\epsilon_0$ in log score. A range-one estimate
+with error $a'$ and failure allowance $p'$ uses
+$\lceil2(a')^{-2}\log(2/p')\rceil$ samples; the standard exponential
+moment bound $\mathbb Ee^{s(X-\mathbb EX)}\le e^{s^2/8}$ proves this
+also conditionally on every adaptive history.
+Dyadic product sampling with $b$ bits changes means by at most $d2^{-b}$.
+The radial distribution is generated from a dyadic uniform midpoint $v$
+via $s=\log(1+(e-1)v)$, whose derivative is below two.
+These biases fit in the primitive estimation allowances.
+
+Retain a private weight at least a downward enclosure of
+$\log(\theta_0\alpha)$ with error at most $1/2$ on every history;
+clip statistics and rewards to their known ranges. If a selected repair
+fails a mandatory eligibility or feasibility check, return the original
+reservation. The strict gates exclude this event on accurate histories.
+All matchings, flows and forest outcomes are feasible even on inaccurate
+histories, and the final matching can always use the positive reservation.
+Let $\Lambda_f$ be a rational upper bound for
+$\log[\prod_i f_i(M)/\prod_i p_{ii}]/n$, and let
+$M_f\ge1+\log(4C_f(d+2)/\theta_0)$ be rational.
+The latter bounds the loss of a bad base row: private/ordinary kernels
+have protection floors, HOME has floor $p_{ii}$, and every retained NEW
+candidate has $p/u$ bounded below by the broad-candidate gate.
+Allocate total estimator and coupling failure probability at most
+\[
+ p_0=\xi_0/[10^6(M_f+\Lambda_f+1)].
+\]
+Conditional forest kernels preserve entire unconditional row laws, so
+base-row error is charged before conditioning, with no division by a rare
+parent-bit probability. Direct dyadic categorical kernels introduce no
+forbidden transition; make their total variation error at most $p_0$.
+All estimator blocks and transitions have a deterministic polynomial bound.
+Thus failure and coupling loss is at most
+$10p_0(M_f+\Lambda_f)$ per agent. The deterministic losses, including
+$64\sqrt\eta$ and even a separately charged reward error
+$128C_fd\sqrt\eta$, total at most $101\epsilon_0$ per agent.
+Their sum is strictly below $\xi_0$.
+
+All LPs and flows are rational with polynomial bit length. In forest
+rounding, derivative-ratio denominators are bounded by downward resets;
+in a row program, charge bit-length additions to the elimination tree of
+disappearing coordinates. The conditional kernels use direct probabilities,
+so they need no rejection from rare events. Maximum-product matchings of
+rational values are exact: if edge values have at most $B$ bits, distinct
+products of $n$ edges have log separation greater than $2^{-4nB}$.
+Log approximations within $2^{-4nB}/(4n)$ therefore suffice for an exact
+choice. These observations give worst-case polynomial work, oracle calls
+and random bits under the displayed precision schedule.
+
+\begin{theorem}[Finite expected-log guarantee]\label{simp:finite-theorem}
+For every rational $\xi>0$, the specified algorithm satisfies
+\[
+ \mathbb E\log\NSW(Z)\ge\log\OPT-U_\star-\xi,
+ \qquad \mathbb E\NSW(Z)\ge e^{-U_\star-\xi}\OPT.
+\]
+\end{theorem}
+\begin{proof}
+All scalar cases have been proved, the one-flow repair realizes its
+ledger on one common outcome, and \eqref{simp:iterate-bound} plus radial
+regret gives the exact inequality. The preceding budget bounds every
+finite error by $n\xi$. Jensen's inequality proves the second assertion.
+\end{proof}
+For $0<\varepsilon\le1$, take $\xi\le\varepsilon/12$.
+Since $R_\star<2$, this gives expected factor at most $R_\star+\varepsilon$.
+For $Y=\log(\OPT/\NSW)\ge0$ and $a=\log(R_\star+\varepsilon)$,
+$a-\mathbb EY\ge\varepsilon/4$ and $a<3/2$; hence Markov's inequality
+implies $\Pr(Y<a)\ge\varepsilon/6$.
+Repeat $\lceil(6/\varepsilon)\log(1/\delta)\rceil$ times independently
+and retain the largest actual utility product. This proves the probability
+claim in Theorem~\ref{simp:main-theorem}. For larger $\varepsilon$, use
+the algorithm with tolerance $\varepsilon=1$.
+The following self-contained lower bound completes its infimum assertion.

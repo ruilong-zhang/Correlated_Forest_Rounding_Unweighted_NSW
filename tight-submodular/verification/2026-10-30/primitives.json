@@ -1,0 +1,32 @@
+{
+  "status": "PASS_SIMPLE_B_INDEPENDENT_PRIMITIVES",
+  "precision_bits": 320,
+  "credit_price_replays": 995,
+  "credit_replays": 720,
+  "price_replays": 275,
+  "arithmetic_replays": 665,
+  "root_replays": 258,
+  "epsilon_probe_domain": "[2^-10,1024], including every block join; larger ratios use gap_upper bypass",
+  "root_box_tests": 39,
+  "private_excluded_boxes": 0,
+  "absent_capped_roots": 12,
+  "largest_credit_price_interval": "237417/140737488355328",
+  "arithmetic_failures": 0,
+  "pre_sha256": {
+    "<SOURCE_ROOT>/certificate/verify_B_simple.cpp": "aec3837ba89a0a3d49f798cc91a014e724a33a883283e91351163068deec7df8",
+    "<REPLAY_ROOT>/verify_B": "2b8505a7ea77910fdfddbf23051aa8a8457d1229684a85af12b880278a753f75",
+    "<REPLAY_ROOT>/data/tables48.txt": "f7fd6acc9b93fd1700b4f70073bd2eb27031dd5222d28908194d693fa6e7a62e",
+    "<REPLAY_ROOT>/data/input48.txt": "a670829844a507c64548440d18f2b8b9dab87601eda3e92fa8c67d57ffa176dd",
+    "<SOURCE_ROOT>/certificate/audit_simple_B.py": "fffe4df8929995591b4097a6483dfcb67b692fd535ea2f1a3e0479000c603c49"
+  },
+  "post_sha256": {
+    "<SOURCE_ROOT>/certificate/verify_B_simple.cpp": "aec3837ba89a0a3d49f798cc91a014e724a33a883283e91351163068deec7df8",
+    "<REPLAY_ROOT>/verify_B": "2b8505a7ea77910fdfddbf23051aa8a8457d1229684a85af12b880278a753f75",
+    "<REPLAY_ROOT>/data/tables48.txt": "f7fd6acc9b93fd1700b4f70073bd2eb27031dd5222d28908194d693fa6e7a62e",
+    "<REPLAY_ROOT>/data/input48.txt": "a670829844a507c64548440d18f2b8b9dab87601eda3e92fa8c67d57ffa176dd",
+    "<SOURCE_ROOT>/certificate/audit_simple_B.py": "fffe4df8929995591b4097a6483dfcb67b692fd535ea2f1a3e0479000c603c49"
+  },
+  "harness_sha256": "9d4bbd29c909274aa356cc8df69a4d7f0c60d3a528721da1986a57049cd2dc0f",
+  "harness_executable_sha256": "8eac1ccd142ea6e4d9bc524f901f95e887af656cf86922d99098353ecc443255",
+  "scope": "Independent implementation probes supplement the analytic arithmetic proof. No bounded cover or global approximation is asserted."
+}
